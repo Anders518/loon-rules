@@ -1,6 +1,6 @@
 # Loon Rules
 
-把 `Accademia/Additional_Rule_For_Clash` 的 Mihomo / Clash 规则集自动转换成 Loon 可用的 `.list` 远程规则。
+把 `Accademia/Additional_Rule_For_Clash` 的 Mihomo / Clash 规则集自动转换成 Loon 可用的 `.list` 远程规则，并提供参考 Loon 配置模板。
 
 ## 目录结构
 
@@ -21,6 +21,15 @@ rules/
 
 这样每类规则不会全部堆在同一个文件夹里。
 
+模板文件保存在：
+
+```text
+templates/loon/
+  README.md
+  loon_whitelist.conf
+  loon_blacklist.conf
+```
+
 ## 使用方式
 
 第一次 Actions 跑完后，先看：
@@ -38,6 +47,12 @@ rules/Gemini/README.md
 rules/OpenAI/README.md
 ```
 
+如果想直接套用配置骨架，看：
+
+```text
+templates/loon/README.md
+```
+
 ## Loon 示例
 
 ```ini
@@ -47,6 +62,11 @@ https://raw.githubusercontent.com/Anders518/loon-rules/main/rules/Gemini/Gemini_
 ```
 
 把 `policy=AI` 改成你 Loon 中真实存在的策略组名。
+
+## 模板选择
+
+- `templates/loon/loon_whitelist.conf`：白名单模式。国内和未命中流量默认直连，只有明确列出的海外服务走代理。
+- `templates/loon/loon_blacklist.conf`：黑名单模式。国内直连，海外服务和未命中流量默认代理。
 
 ## 自动更新
 
