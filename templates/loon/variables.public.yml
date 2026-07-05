@@ -1,4 +1,4 @@
-# Public example variables for rendering Loon templates.
+# Public example variables for rendering Loon and Mihomo templates.
 #
 # This file is safe for a public repository because it contains placeholders only.
 # Create a local, private copy named `variables.private.yml` and replace the values there.
@@ -7,17 +7,12 @@
 repo_raw_root: "https://raw.githubusercontent.com/Anders518/loon-rules/main"
 
 subscription:
-  # Daily primary subscriptions. Remote filters use all names listed here.
   primary_names:
     - "primary-a"
     - "primary-b"
-
-  # Full [Remote Proxy] lines for primary subscriptions.
   primary_proxy_lines:
     - "primary-a = <SUBSCRIPTION_URL_PRIMARY_A>,parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
     - "primary-b = <SUBSCRIPTION_URL_PRIMARY_B>,parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
-
-  # Backup subscriptions. These are manual fallback only.
   backup_names:
     - "backup"
   backup_proxy_lines:
@@ -30,6 +25,36 @@ private:
   wg_proxy_lines:
     - "# Add full Loon WireGuard proxy lines in private storage only."
   wg_private_cidr: "<WG_PRIVATE_CIDR>"
+
+mihomo:
+  proxy_provider_lines:
+    - "  primary-a:"
+    - "    type: http"
+    - "    url: <SUBSCRIPTION_URL_PRIMARY_A>"
+    - "    path: ./providers/primary-a.yaml"
+    - "    interval: 3600"
+    - "    health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300}"
+    - "  primary-b:"
+    - "    type: http"
+    - "    url: <SUBSCRIPTION_URL_PRIMARY_B>"
+    - "    path: ./providers/primary-b.yaml"
+    - "    interval: 3600"
+    - "    health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300}"
+    - "  backup:"
+    - "    type: http"
+    - "    url: <SUBSCRIPTION_URL_BACKUP>"
+    - "    path: ./providers/backup.yaml"
+    - "    interval: 3600"
+    - "    health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300}"
+  primary_provider_names:
+    - "      - primary-a"
+    - "      - primary-b"
+  backup_provider_names:
+    - "      - backup"
+  static_proxy_lines:
+    - "  # Add Mihomo static proxies here if needed."
+  wg_proxy_names:
+    - "      # - wg-main"
 
 policy:
   main: "主代理"
