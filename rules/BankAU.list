@@ -1,0 +1,19 @@
+# Name: BankAU
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankAU.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,hsbc.com.au
+DOMAIN,au.hsbc.com
+DOMAIN-SUFFIX,.au.hsbc.com
+DOMAIN-SUFFIX,citibank.com.au
+DOMAIN-SUFFIX,citi.com.au
+DOMAIN-SUFFIX,commbank.com.au
+DOMAIN-SUFFIX,westpac.com.au
+DOMAIN-SUFFIX,anz.com.au
+DOMAIN-SUFFIX,nab.com.au
+DOMAIN-SUFFIX,macquarie.com.au
+DOMAIN-SUFFIX,boq.com.au
+DOMAIN-SUFFIX,bendigobank.com.au
+DOMAIN-SUFFIX,suncorp.com.au
+DOMAIN-SUFFIX,amp.com.au
+DOMAIN-SUFFIX,bankwest.com.au

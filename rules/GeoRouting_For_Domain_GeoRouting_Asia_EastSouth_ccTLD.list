@@ -1,0 +1,14 @@
+# Name: GeoRouting_For_Domain_GeoRouting_Asia_EastSouth_ccTLD
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_Asia_EastSouth_ccTLD.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,sg
+DOMAIN-SUFFIX,th
+DOMAIN-SUFFIX,id
+DOMAIN-SUFFIX,vn
+DOMAIN-SUFFIX,mm
+DOMAIN-SUFFIX,ph
+DOMAIN-SUFFIX,my
+DOMAIN-SUFFIX,bn
+DOMAIN-SUFFIX,kh
+DOMAIN-SUFFIX,cx

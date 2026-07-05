@@ -1,0 +1,7 @@
+# Name: GeoRouting_For_IP_GeoRouting_Antarctica_GeoIP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Antarctica_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,aq
+GEOIP,tf
+GEOIP,gs

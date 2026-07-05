@@ -1,0 +1,16 @@
+# Name: BlockHttpDNSPlus
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/BlockHttpDNSPlus/BlockHttpDNSPlus.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-KEYWORD,httpsdns
+DOMAIN-KEYWORD,https-dns
+DOMAIN-KEYWORD,https.dns
+DOMAIN-KEYWORD,httpdns
+DOMAIN-KEYWORD,http-dns
+DOMAIN-KEYWORD,http.dns
+DOMAIN-KEYWORD,apidns
+DOMAIN-KEYWORD,api-dns
+DOMAIN-KEYWORD,api.dns
+DOMAIN-KEYWORD,dnsapi
+DOMAIN-KEYWORD,dns-api
+DOMAIN-KEYWORD,dns.api

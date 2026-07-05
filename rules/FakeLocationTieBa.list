@@ -1,0 +1,8 @@
+# Name: FakeLocationTieBa
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/FakeLocation/FakeLocationTieBa.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,httpdns.baidu.com
+DOMAIN-SUFFIX,httpdns.baidubce.com
+DOMAIN,tiebac.baidu.com
+IP-CIDR,180.76.76.0/24

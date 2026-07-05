@@ -1,0 +1,12 @@
+# Name: BankCA_No_Resolve
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankCA_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,rbcroyalbank.com
+DOMAIN-SUFFIX,scotiabank.com
+DOMAIN-SUFFIX,bmo.com
+DOMAIN-SUFFIX,cibc.com
+DOMAIN-SUFFIX,cwbank.com
+DOMAIN-SUFFIX,desjardins.com
+DOMAIN-SUFFIX,nbc.ca
+DOMAIN-SUFFIX,laurentianbank.ca

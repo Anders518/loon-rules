@@ -1,0 +1,9 @@
+# Name: PreRepairEasyPrivacy_PROXY
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/PreRepairEasyPrivacy/PreRepairEasyPrivacy_PROXY.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,admob.com
+DOMAIN-SUFFIX,adsense.com
+DOMAIN-SUFFIX,www.googleadservices.com
+DOMAIN-KEYWORD,.analytics.com
+DOMAIN-SUFFIX,click.redditmail.com

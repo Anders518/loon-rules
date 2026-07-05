@@ -1,0 +1,23 @@
+# Name: BaiduNetDisk_No_Resolve
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/BaiduNetDisk/BaiduNetDisk_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,httpsdns.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,diskapi.baidu.com
+DOMAIN-SUFFIX,netdisk.baidu.com
+DOMAIN-SUFFIX,pan.baidu.com
+DOMAIN-SUFFIX,baidupcs.com
+DOMAIN-SUFFIX,wangpan.lcs.baidu.com
+DOMAIN-SUFFIX,panpic.baidu.com
+DOMAIN-SUFFIX,sofire.baidu.com
+DOMAIN-SUFFIX,gips1.baidu.com
+DOMAIN-SUFFIX,afd.baidu.com
+DOMAIN-SUFFIX,als.baidu.com
+DOMAIN-SUFFIX,hmma.baidu.com
+DOMAIN-SUFFIX,h2tcbox.baidu.com
+DOMAIN-SUFFIX,mbd.baidu.com
+DOMAIN-SUFFIX,hm.baidu.com
+DOMAIN-SUFFIX,himg.bdimg.com
+DOMAIN-SUFFIX,d.pcs.baidu.com
+DOMAIN-SUFFIX,ss0.bdstatic.com
+DOMAIN-SUFFIX,fyb-2.cdn.bcebos.com

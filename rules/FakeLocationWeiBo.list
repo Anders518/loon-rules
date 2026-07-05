@@ -1,0 +1,8 @@
+# Name: FakeLocationWeiBo
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/FakeLocation/FakeLocationWeiBo.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,wbimg.cn
+DOMAIN-SUFFIX,wbimg.com
+DOMAIN-SUFFIX,sinaimg.cn
+DOMAIN-KEYWORD,weibo

@@ -1,0 +1,21 @@
+# Name: PreRepairEasyPrivacy_REJECT
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/PreRepairEasyPrivacy/PreRepairEasyPrivacy_REJECT.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-KEYWORD,app-analytics,REJECT-DROP
+DOMAIN-KEYWORD,analytics.,REJECT-DROP
+DOMAIN-KEYWORD,pclog.,REJECT-DROP
+DOMAIN-KEYWORD,applog.,REJECT-DROP
+DOMAIN-KEYWORD,ioslog.,REJECT-DROP
+DOMAIN-KEYWORD,pc-log.,REJECT-DROP
+DOMAIN-KEYWORD,app-log.,REJECT-DROP
+DOMAIN-KEYWORD,ios-log.,REJECT-DROP
+DOMAIN-KEYWORD,guide-acs.taobao.com,REJECT-DROP
+DOMAIN-KEYWORD,amdc.m.taobao.com,REJECT-DROP
+DOMAIN-SUFFIX,fclog.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,hm.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,hector.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,hectorstatic.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,tcbox.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,bgg.baidu.com,REJECT-DROP
+DOMAIN-SUFFIX,api.xsj.wasu.tv,REJECT-DROP

@@ -1,0 +1,22 @@
+# Name: GeoRouting_For_IP_GeoRouting_Asia_West_GeoIP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Asia_West_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,tr
+GEOIP,il
+GEOIP,ae
+GEOIP,sa
+GEOIP,ye
+GEOIP,iq
+GEOIP,ir
+GEOIP,sy
+GEOIP,am
+GEOIP,jo
+GEOIP,lb
+GEOIP,kw
+GEOIP,om
+GEOIP,qa
+GEOIP,bh
+GEOIP,ps
+GEOIP,az
+GEOIP,ge

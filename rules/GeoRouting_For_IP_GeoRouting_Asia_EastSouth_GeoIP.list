@@ -1,0 +1,15 @@
+# Name: GeoRouting_For_IP_GeoRouting_Asia_EastSouth_GeoIP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Asia_EastSouth_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,sg
+GEOIP,th
+GEOIP,id
+GEOIP,vn
+GEOIP,mm
+GEOIP,la
+GEOIP,ph
+GEOIP,my
+GEOIP,bn
+GEOIP,kh
+GEOIP,cx

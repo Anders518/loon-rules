@@ -1,0 +1,22 @@
+# Name: GeoRouting_For_Domain_GeoRouting_Asia_West_ccTLD_No_Resolve
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_Asia_West_ccTLD_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,tr
+DOMAIN-SUFFIX,il
+DOMAIN-SUFFIX,ae
+DOMAIN-SUFFIX,sa
+DOMAIN-SUFFIX,ye
+DOMAIN-SUFFIX,iq
+DOMAIN-SUFFIX,ir
+DOMAIN-SUFFIX,sy
+DOMAIN-SUFFIX,am
+DOMAIN-SUFFIX,jo
+DOMAIN-SUFFIX,lb
+DOMAIN-SUFFIX,kw
+DOMAIN-SUFFIX,om
+DOMAIN-SUFFIX,qa
+DOMAIN-SUFFIX,bh
+DOMAIN-SUFFIX,ps
+DOMAIN-SUFFIX,az
+DOMAIN-SUFFIX,ge

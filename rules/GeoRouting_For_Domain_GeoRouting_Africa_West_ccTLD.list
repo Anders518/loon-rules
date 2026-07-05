@@ -1,0 +1,20 @@
+# Name: GeoRouting_For_Domain_GeoRouting_Africa_West_ccTLD
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_Africa_West_ccTLD.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,ng
+DOMAIN-SUFFIX,ne
+DOMAIN-SUFFIX,bf
+DOMAIN-SUFFIX,ml
+DOMAIN-SUFFIX,mr
+DOMAIN-SUFFIX,sn
+DOMAIN-SUFFIX,gm
+DOMAIN-SUFFIX,gw
+DOMAIN-SUFFIX,gn
+DOMAIN-SUFFIX,sl
+DOMAIN-SUFFIX,lr
+DOMAIN-SUFFIX,gh
+DOMAIN-SUFFIX,tg
+DOMAIN-SUFFIX,bj
+DOMAIN-SUFFIX,cv
+DOMAIN-SUFFIX,ci

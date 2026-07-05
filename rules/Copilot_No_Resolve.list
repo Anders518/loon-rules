@@ -1,0 +1,20 @@
+# Name: Copilot_No_Resolve
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Copilot/Copilot_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN,copilot.microsoft.com
+DOMAIN,edge.microsoft.com
+DOMAIN-SUFFIX,ecs.office.com
+DOMAIN-SUFFIX,designer.microsoft.com
+DOMAIN-SUFFIX,designerapp.osi.office.net
+DOMAIN-SUFFIX,designerapp.officeapps.live.com
+DOMAIN,www.bing.com
+DOMAIN,sydney.bing.com
+DOMAIN,edgeservices.bing.com
+DOMAIN,www.bingapis.com
+DOMAIN-SUFFIX,events.data.microsoft.com
+DOMAIN-SUFFIX,prod.do.dsp.mp.microsoft.com
+DOMAIN,access-point.cloudmessaging.edge.microsoft.com
+DOMAIN,browser.pipe.aria.microsoft.com
+DOMAIN,functional.events.data.microsoft.com
+DOMAIN,studiostaticassetsprod.azureedge.net
