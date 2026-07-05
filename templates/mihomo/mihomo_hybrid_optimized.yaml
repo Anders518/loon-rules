@@ -1,10 +1,14 @@
 # Mihomo Hybrid Optimized Template
 # Public-safe source template. Fill private values in Anders518/loon-conf-private.
 #
-# Design:
-# - Mirrors current Loon logic: Lk2 + wd primary, ssd-bk manual backup, regional banks, AI, crypto, WireGuard-private routing.
-# - Uses Accademia upstream Clash/Mihomo YAML rules directly where available.
-# - Uses blackmatrix7 only for missing fallback categories: OpenAI, Claude, Crypto, Binance, OKX.
+# Accademia-inspired core:
+# - DNS is the first-class control plane; routing rules are the second layer.
+# - Do not use fake-ip.
+# - Do not use fallback DNS.
+# - CN/personal/local domains resolve through domestic/system DNS.
+# - Overseas, AI, crypto, banking, and remote resources resolve through policy-bound DoH.
+# - Domain rules are preferred before IP / GEOIP fallback.
+# - Primary providers are Lk2 + wd; ssd-bk remains manual backup only.
 
 mixed-port: 7890
 allow-lan: false
@@ -21,30 +25,101 @@ unified-delay: true
 tcp-concurrent: false
 global-client-fingerprint: chrome
 
+# ============================================================
+# DNS-first design
+# ============================================================
+# Accademia's practical point is that DNS correctness is more important than piling up rules.
+# This template therefore keeps redir-host, disables fallback, and pushes non-CN sensitive
+# resolution through policy-bound DoH servers where Mihomo supports the #policy suffix.
 dns:
   enable: true
-  prefer-h3: false
   listen: 0.0.0.0:1053
   ipv6: false
   enhanced-mode: redir-host
   use-hosts: true
   use-system-hosts: true
+  prefer-h3: false
+  respect-rules: true
+
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
+
+  # Base nameserver is domestic and deterministic. Overseas domains are redirected below
+  # by nameserver-policy instead of by fallback.
   nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
+  # Proxy provider hostnames should be resolvable before proxy groups are ready.
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
+  # No fallback DNS. This avoids the classic leak path where an overseas fallback resolver
+  # answers domains that should have been resolved through a proxy-side resolver.
+  fallback: []
+
   nameserver-policy:
+    # Personal/local/direct domains: never resolve through proxy-side DNS.
+    +.<PERSONAL_DIRECT_DOMAIN>:
+      - system
+    localhost:
+      - system
+    '*.local':
+      - system
+
+    # Domestic/direct domains: resolve domestically first.
+    rule-set:geosite-cn,china,apple,microsoft-apps,mac-app-upgrade:
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
     geosite:cn:
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    +.<PERSONAL_DIRECT_DOMAIN>:
-      - system
-  fallback: []
+
+    # Remote resources are fetched through 主代理, so DNS follows 主代理 too.
+    raw.githubusercontent.com:
+      - https://1.1.1.1/dns-query#主代理
+      - https://8.8.8.8/dns-query#主代理
+    +.githubusercontent.com:
+      - https://1.1.1.1/dns-query#主代理
+      - https://8.8.8.8/dns-query#主代理
+    +.github.com:
+      - https://1.1.1.1/dns-query#主代理
+      - https://8.8.8.8/dns-query#主代理
+    +.github.io:
+      - https://1.1.1.1/dns-query#主代理
+      - https://8.8.8.8/dns-query#主代理
+    +.jsdelivr.net:
+      - https://1.1.1.1/dns-query#主代理
+      - https://8.8.8.8/dns-query#主代理
+
+    # AI: resolve through AI policy, not through direct DNS.
+    rule-set:gemini,grok,copilot,openai,claude,apple-ai:
+      - https://1.1.1.1/dns-query#AI
+      - https://8.8.8.8/dns-query#AI
+
+    # Crypto and exchanges: resolve through fixed crypto policy.
+    rule-set:crypto,binance,okx:
+      - https://1.1.1.1/dns-query#Crypto
+      - https://8.8.8.8/dns-query#Crypto
+
+    # Regional banking: resolve through the same regional bank policy used for traffic.
+    rule-set:bank-hk:
+      - https://1.1.1.1/dns-query#BANK-HK
+      - https://8.8.8.8/dns-query#BANK-HK
+    rule-set:bank-sg:
+      - https://1.1.1.1/dns-query#BANK-SG
+      - https://8.8.8.8/dns-query#BANK-SG
+    rule-set:bank-us:
+      - https://1.1.1.1/dns-query#BANK-US
+      - https://8.8.8.8/dns-query#BANK-US
+    rule-set:bank-de:
+      - https://1.1.1.1/dns-query#BANK-DE
+      - https://8.8.8.8/dns-query#BANK-DE
+    rule-set:paypal,wise,monzo,revolut:
+      - https://1.1.1.1/dns-query#SENSITIVE_FIXED
+      - https://8.8.8.8/dns-query#SENSITIVE_FIXED
 
 proxy-providers:
 <MIHOMO_PROXY_PROVIDER_LINES>
@@ -170,152 +245,111 @@ proxy-groups:
 
   - name: 香港策略
     type: select
-    proxies:
-      - 香港时延优选
-      - 香港节点
-      - DIRECT
-
+    proxies: [香港时延优选, 香港节点, DIRECT]
   - name: 台湾策略
     type: select
-    proxies:
-      - 台湾时延优选
-      - 台湾节点
-      - DIRECT
-
+    proxies: [台湾时延优选, 台湾节点, DIRECT]
   - name: 日本策略
     type: select
-    proxies:
-      - 日本时延优选
-      - 日本节点
-      - DIRECT
-
+    proxies: [日本时延优选, 日本节点, DIRECT]
   - name: 韩国策略
     type: select
-    proxies:
-      - 韩国时延优选
-      - 韩国节点
-      - DIRECT
-
+    proxies: [韩国时延优选, 韩国节点, DIRECT]
   - name: 新国策略
     type: select
-    proxies:
-      - 新国时延优选
-      - 新国节点
-      - DIRECT
-
+    proxies: [新国时延优选, 新国节点, DIRECT]
   - name: 美国策略
     type: select
-    proxies:
-      - 美国时延优选
-      - 美国节点
-      - DIRECT
-
+    proxies: [美国时延优选, 美国节点, DIRECT]
   - name: 德国策略
     type: select
-    proxies:
-      - 德国时延优选
-      - 德国节点
-      - DIRECT
+    proxies: [德国时延优选, 德国节点, DIRECT]
 
   - name: 游戏手动策略
     type: select
-    proxies:
-      - 游戏节点
-      - 主代理
-      - DIRECT
-
+    proxies: [游戏节点, 主代理, DIRECT]
   - name: 全球手动策略
     type: select
-    proxies:
-      - 全球节点
-      - 主代理
-      - DIRECT
-
+    proxies: [全球节点, 主代理, DIRECT]
   - name: 备用手动策略
     type: select
-    proxies:
-      - 备用美国节点
-      - 备用新国节点
-      - 备用香港节点
-      - 备用德国节点
-      - 备用全部节点
-      - DIRECT
+    proxies: [备用美国节点, 备用新国节点, 备用香港节点, 备用德国节点, 备用全部节点, DIRECT]
 
+  # Primary node selectors. They intentionally use primary providers only.
   - name: 香港节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 台湾节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 日本节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 韩国节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|KOR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 新国节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 美国节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 德国节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇩🇪|德国|德國|法兰克福|法蘭克福|(\b(DE|DEU|Germany|Frankfurt)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 游戏节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*((?i)游戏|🎮|(\b(GAME)(\d+)?\b)))(?!.*((?i)回国|校园)).*$'
-
   - name: 全球节点
     type: select
-    include-all-providers: true
+    use:
+<MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
+  # Backup selectors. These are manual fallback only and never enter url-test.
   - name: 备用香港节点
     type: select
     use:
 <MIHOMO_BACKUP_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 备用新国节点
     type: select
     use:
 <MIHOMO_BACKUP_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 备用美国节点
     type: select
     use:
 <MIHOMO_BACKUP_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 备用德国节点
     type: select
     use:
 <MIHOMO_BACKUP_PROVIDER_NAMES>
     filter: '^(?=.*((?i)🇩🇪|德国|德國|法兰克福|法蘭克福|(\b(DE|DEU|Germany|Frankfurt)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-
   - name: 备用全部节点
     type: select
     use:
 <MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
+    filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
+  # Primary url-test groups only use Lk2 + wd providers.
   - name: 香港时延优选
     type: url-test
     use:
@@ -324,7 +358,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
   - name: 台湾时延优选
     type: url-test
     use:
@@ -333,7 +366,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
   - name: 日本时延优选
     type: url-test
     use:
@@ -342,7 +374,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
   - name: 韩国时延优选
     type: url-test
     use:
@@ -351,7 +382,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
   - name: 新国时延优选
     type: url-test
     use:
@@ -360,7 +390,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
   - name: 美国时延优选
     type: url-test
     use:
@@ -369,7 +398,6 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-
   - name: 德国时延优选
     type: url-test
     use:
@@ -379,6 +407,9 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
+# ============================================================
+# Rule providers: Domain-first, IP/GEOIP only as fallback.
+# ============================================================
 rule-providers:
   geosite-cn:
     type: http
@@ -432,36 +463,36 @@ rule-providers:
   openai:
     type: http
     behavior: classical
-    format: text
-    path: ./ruleset/blackmatrix7/OpenAI.list
+    format: yaml
+    path: ./ruleset/blackmatrix7/OpenAI.yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml
     interval: 21600
   claude:
     type: http
     behavior: classical
-    format: text
-    path: ./ruleset/blackmatrix7/Claude.list
+    format: yaml
+    path: ./ruleset/blackmatrix7/Claude.yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml
     interval: 21600
   crypto:
     type: http
     behavior: classical
-    format: text
-    path: ./ruleset/blackmatrix7/Crypto.list
+    format: yaml
+    path: ./ruleset/blackmatrix7/Crypto.yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Crypto/Crypto.yaml
     interval: 21600
   binance:
     type: http
     behavior: classical
-    format: text
-    path: ./ruleset/blackmatrix7/Binance.list
+    format: yaml
+    path: ./ruleset/blackmatrix7/Binance.yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Binance/Binance.yaml
     interval: 21600
   okx:
     type: http
     behavior: classical
-    format: text
-    path: ./ruleset/blackmatrix7/OKX.list
+    format: yaml
+    path: ./ruleset/blackmatrix7/OKX.yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OKX/OKX.yaml
     interval: 21600
   paypal:
@@ -543,6 +574,7 @@ rule-providers:
     interval: 21600
 
 rules:
+  # Local/direct and update infrastructure first.
   - DOMAIN,raw.githubusercontent.com,主代理
   - DOMAIN-SUFFIX,githubusercontent.com,主代理
   - DOMAIN-SUFFIX,github.com,主代理
@@ -551,7 +583,11 @@ rules:
   - DOMAIN,<PERSONAL_DIRECT_DOMAIN>,PERSONAL_DIRECT
   - DOMAIN-SUFFIX,<PERSONAL_DIRECT_DOMAIN>,PERSONAL_DIRECT
   - IP-CIDR,<WG_PRIVATE_CIDR>,WG_PRIVATE,no-resolve
+
+  # Reject/hijacking first.
   - RULE-SET,hijacking-plus,REJECT
+
+  # Sensitive overseas categories before broad direct rules.
   - RULE-SET,gemini,AI
   - RULE-SET,grok,AI
   - RULE-SET,copilot,AI
@@ -569,10 +605,14 @@ rules:
   - RULE-SET,bank-sg,BANK-SG
   - RULE-SET,bank-us,BANK-US
   - RULE-SET,bank-de,BANK-DE
+
+  # Domestic/system direct layer.
   - RULE-SET,apple,DIRECT
   - RULE-SET,microsoft-apps,DIRECT
   - RULE-SET,mac-app-upgrade,DIRECT
   - RULE-SET,geosite-cn,DIRECT
   - RULE-SET,china,DIRECT
   - GEOIP,CN,DIRECT
+
+  # Blacklist-style final proxy.
   - MATCH,主代理
