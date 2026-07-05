@@ -14,8 +14,15 @@ subscription:
 
 private:
   personal_direct_domain: "<PERSONAL_DIRECT_DOMAIN>"
-  # Comma-separated WireGuard node names, or a YAML list.
-  wg_node_names: "wg-main"
+
+  # WireGuard node names used by WG_PRIVATE. YAML list or comma-separated string are both supported.
+  wg_node_names:
+    - "wg-main"
+
+  # Full Loon [Proxy] WireGuard lines. Keep real keys and endpoints only in private storage.
+  wg_proxy_lines:
+    - "# wg-main = wireguard,interface-ip=<WG_INTERFACE_IP>,private-key=<WG_PRIVATE_KEY>,mtu=1280,dns=<WG_DNS>,keepalive=30,peers=[{public-key=<WG_PEER_PUBLIC_KEY>,allowed-ips=<WG_ALLOWED_IPS>,endpoint=<WG_ENDPOINT>,preshared-key=<WG_PRESHARED_KEY>}],udp=true"
+
   wg_private_cidr: "<WG_PRIVATE_CIDR>"
 
 policy:
