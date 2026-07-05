@@ -23,6 +23,14 @@ import yaml
 PLACEHOLDER_RE = re.compile(r"<([A-Z0-9_]+)>")
 
 
+def scalar_to_string(value: Any) -> str:
+    if isinstance(value, bool):
+        return str(value).lower()
+    if isinstance(value, list):
+        return ",".join(str(item) for item in value)
+    return str(value)
+
+
 def flatten(data: dict[str, Any], prefix: str = "") -> dict[str, str]:
     result: dict[str, str] = {}
 
@@ -33,7 +41,7 @@ def flatten(data: dict[str, Any], prefix: str = "") -> dict[str, str]:
         if isinstance(value, dict):
             result.update(flatten(value, normalized_key))
         else:
-            result[normalized_key] = str(value).lower() if isinstance(value, bool) else str(value)
+            result[normalized_key] = scalar_to_string(value)
 
     return result
 
@@ -49,6 +57,7 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         "SUBSCRIPTION_URL_BACKUP": "SUBSCRIPTION_BACKUP_URL",
         "PERSONAL_DIRECT_DOMAIN": "PRIVATE_PERSONAL_DIRECT_DOMAIN",
         "WG_NODE_NAME": "PRIVATE_WG_NODE_NAME",
+        "WG_NODE_NAMES": "PRIVATE_WG_NODE_NAMES",
         "WG_PRIVATE_CIDR": "PRIVATE_WG_PRIVATE_CIDR",
         "URL_TEST_INTERVAL": "GENERAL_URL_TEST_INTERVAL",
         "URL_TEST_TOLERANCE": "GENERAL_URL_TEST_TOLERANCE",
@@ -57,6 +66,10 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
     for alias, source in alias_map.items():
         if source in values:
             aliases[alias] = values[source]
+
+    # Backward compatibility: if only wg_node_name is defined, use it as wg_node_names too.
+    if "WG_NODE_NAMES" not in aliases and "WG_NODE_NAME" in aliases:
+        aliases["WG_NODE_NAMES"] = aliases["WG_NODE_NAME"]
 
     return aliases
 
