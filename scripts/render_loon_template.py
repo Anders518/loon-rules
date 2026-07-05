@@ -38,7 +38,11 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
     aliases = dict(values)
     alias_map = {
         "PRIMARY": "SUBSCRIPTION_PRIMARY_NAME",
+        "PRIMARY_NAMES": "SUBSCRIPTION_PRIMARY_NAMES",
+        "PRIMARY_PROXY_LINES": "SUBSCRIPTION_PRIMARY_PROXY_LINES",
         "BACKUP": "SUBSCRIPTION_BACKUP_NAME",
+        "BACKUP_NAMES": "SUBSCRIPTION_BACKUP_NAMES",
+        "BACKUP_PROXY_LINES": "SUBSCRIPTION_BACKUP_PROXY_LINES",
         "SUBSCRIPTION_URL_PRIMARY": "SUBSCRIPTION_PRIMARY_URL",
         "SUBSCRIPTION_URL_BACKUP": "SUBSCRIPTION_BACKUP_URL",
         "PERSONAL_DIRECT_DOMAIN": "PRIVATE_PERSONAL_DIRECT_DOMAIN",
@@ -52,10 +56,19 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
     for alias, source in alias_map.items():
         if source in values:
             aliases[alias] = values[source]
+
+    if "PRIMARY_NAMES" not in aliases and "PRIMARY" in aliases:
+        aliases["PRIMARY_NAMES"] = aliases["PRIMARY"]
+    if "BACKUP_NAMES" not in aliases and "BACKUP" in aliases:
+        aliases["BACKUP_NAMES"] = aliases["BACKUP"]
     if "WG_NODE_NAMES" not in aliases and "WG_NODE_NAME" in aliases:
         aliases["WG_NODE_NAMES"] = aliases["WG_NODE_NAME"]
     if "WG_PROXY_LINES" not in aliases:
         aliases["WG_PROXY_LINES"] = "# Add WireGuard lines in variables file"
+    if "PRIMARY_PROXY_LINES" not in aliases and "PRIMARY" in aliases and "SUBSCRIPTION_URL_PRIMARY" in aliases:
+        aliases["PRIMARY_PROXY_LINES"] = f"{aliases['PRIMARY']} = {aliases['SUBSCRIPTION_URL_PRIMARY']},parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
+    if "BACKUP_PROXY_LINES" not in aliases and "BACKUP" in aliases and "SUBSCRIPTION_URL_BACKUP" in aliases:
+        aliases["BACKUP_PROXY_LINES"] = f"{aliases['BACKUP']} = {aliases['SUBSCRIPTION_URL_BACKUP']},parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
     return aliases
 
 
