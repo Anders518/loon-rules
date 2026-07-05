@@ -7,22 +7,28 @@
 repo_raw_root: "https://raw.githubusercontent.com/Anders518/loon-rules/main"
 
 subscription:
-  primary_name: "primary"
-  backup_name: "backup"
-  primary_url: "<SUBSCRIPTION_URL_PRIMARY>"
-  backup_url: "<SUBSCRIPTION_URL_BACKUP>"
+  # Daily primary subscriptions. Remote filters use all names listed here.
+  primary_names:
+    - "primary-a"
+    - "primary-b"
+
+  # Full [Remote Proxy] lines for primary subscriptions.
+  primary_proxy_lines:
+    - "primary-a = <SUBSCRIPTION_URL_PRIMARY_A>,parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
+    - "primary-b = <SUBSCRIPTION_URL_PRIMARY_B>,parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
+
+  # Backup subscriptions. These are manual fallback only.
+  backup_names:
+    - "backup"
+  backup_proxy_lines:
+    - "backup = <SUBSCRIPTION_URL_BACKUP>,parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
 
 private:
   personal_direct_domain: "<PERSONAL_DIRECT_DOMAIN>"
-
-  # WireGuard node names used by WG_PRIVATE. YAML list or comma-separated string are both supported.
   wg_node_names:
     - "wg-main"
-
-  # Full Loon [Proxy] WireGuard lines. Keep real keys and endpoints only in private storage.
   wg_proxy_lines:
-    - "# wg-main = wireguard,interface-ip=<WG_INTERFACE_IP>,private-key=<WG_PRIVATE_KEY>,mtu=1280,dns=<WG_DNS>,keepalive=30,peers=[{public-key=<WG_PEER_PUBLIC_KEY>,allowed-ips=<WG_ALLOWED_IPS>,endpoint=<WG_ENDPOINT>,preshared-key=<WG_PRESHARED_KEY>}],udp=true"
-
+    - "# Add full Loon WireGuard proxy lines in private storage only."
   wg_private_cidr: "<WG_PRIVATE_CIDR>"
 
 policy:
