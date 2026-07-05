@@ -1,28 +1,88 @@
 # Loon Rules
 
-This repository converts rule-provider YAML files from Accademia/Additional_Rule_For_Clash into Loon-compatible text rule lists.
+把 `Accademia/Additional_Rule_For_Clash` 的 Mihomo / Clash 规则集自动转换成 Loon 可用的 `.list` 远程规则。
 
-Generated files are written to `rules/*.list` by GitHub Actions.
+## 目录结构
 
-## Update
+转换后会按上游分类目录保存：
 
-The workflow runs every 6 hours and can also be started manually from the Actions tab.
+```text
+rules/
+  README.md
+  Gemini/
+    README.md
+    Gemini_Domain.list
+    Gemini_IP.list
+  OpenAI/
+    README.md
+    OpenAI_Domain.list
+    OpenAI_IP.list
+```
 
-## Example
+这样每类规则不会全部堆在同一个文件夹里。
 
-After the first workflow run, use files under:
+## 使用方式
 
-`https://raw.githubusercontent.com/Anders518/loon-rules/main/rules/`
+第一次 Actions 跑完后，先看：
 
-Example file names:
+```text
+rules/README.md
+```
 
-- `Gemini_Domain.list`
-- `Gemini_IP.list`
-- `OpenAI_Domain.list`
-- `OpenAI_IP.list`
+里面会列出所有分类和常用 Loon 引用示例。
 
-In Loon, add the generated raw file URL as a Remote Rule and set the policy to your own policy group name.
+每个分类目录也会有自己的说明文件，例如：
 
-## Notes
+```text
+rules/Gemini/README.md
+rules/OpenAI/README.md
+```
 
-The converter is conservative. It converts domain, domain-suffix, IP-CIDR, IP-CIDR6, and other compatible classical rule lines. Unsupported Mihomo-only or Clash-only rule types are skipped.
+## Loon 示例
+
+```ini
+[Remote Rule]
+https://raw.githubusercontent.com/Anders518/loon-rules/main/rules/Gemini/Gemini_Domain.list, policy=AI, tag=Gemini Domain, enabled=true
+https://raw.githubusercontent.com/Anders518/loon-rules/main/rules/Gemini/Gemini_IP.list, policy=AI, tag=Gemini IP, enabled=true
+```
+
+把 `policy=AI` 改成你 Loon 中真实存在的策略组名。
+
+## 自动更新
+
+GitHub Actions 每 6 小时自动运行一次，也可以手动运行：
+
+```text
+Actions -> Sync Loon Rules -> Run workflow
+```
+
+每次运行会：
+
+1. 扫描上游所有 `.yaml` / `.yml` 规则集；
+2. 按上游目录分类生成 `rules/<分类>/*.list`；
+3. 生成 `rules/README.md` 和每个分类目录的 `README.md`；
+4. 提交更新后的规则和说明文件。
+
+## 转换说明
+
+支持的主要转换：
+
+```text
++.example.com    -> DOMAIN-SUFFIX,example.com
+example.com      -> DOMAIN,example.com
+1.2.3.0/24       -> IP-CIDR,1.2.3.0/24,no-resolve
+2001:db8::/32    -> IP-CIDR6,2001:db8::/32,no-resolve
+```
+
+已经是兼容格式的 classical 规则会保留，例如：
+
+```text
+DOMAIN-SUFFIX,example.com
+IP-CIDR,1.2.3.0/24,no-resolve
+```
+
+不适合直接转换到 Loon 的 Mihomo / Clash 专用规则类型会被跳过，并记录在：
+
+```text
+build/summary.md
+```
