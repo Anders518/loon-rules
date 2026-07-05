@@ -33,10 +33,17 @@ jobs:
         run: |
           python scripts/convert.py
 
-      - name: Commit generated rules
+      - name: Render public Loon template
+        run: |
+          python scripts/render_loon_template.py \
+            --template templates/loon/loon_hybrid_optimized.conf \
+            --variables templates/loon/variables.public.yml \
+            --output generated/loon_hybrid_optimized.conf
+
+      - name: Commit generated rules and configs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add rules/ build/summary.md
-          git diff --cached --quiet || git commit -m "Update generated Loon rules"
+          git add rules/ build/summary.md generated/loon_hybrid_optimized.conf
+          git diff --cached --quiet || git commit -m "Update generated Loon rules and config"
           git push
