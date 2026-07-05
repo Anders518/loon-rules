@@ -1,0 +1,39 @@
+# Public example variables for rendering Loon templates.
+#
+# This file is safe for a public repository because it contains placeholders only.
+# Create a local, private copy named `variables.private.yml` and replace the values there.
+# Do not commit `variables.private.yml`.
+
+repo_raw_root: "https://raw.githubusercontent.com/Anders518/loon-rules/main"
+
+subscription:
+  primary_name: "primary"
+  backup_name: "backup"
+  primary_url: "<SUBSCRIPTION_URL_PRIMARY>"
+  backup_url: "<SUBSCRIPTION_URL_BACKUP>"
+
+private:
+  personal_direct_domain: "<PERSONAL_DIRECT_DOMAIN>"
+  wg_node_name: "wg-main"
+  wg_private_cidr: "<WG_PRIVATE_CIDR>"
+
+policy:
+  main: "主代理"
+  wg_private: "WG_PRIVATE"
+  personal_direct: "PERSONAL_DIRECT"
+  sensitive_fixed: "SENSITIVE_FIXED"
+  bank_us: "BANK-US"
+  crypto: "Crypto"
+  ai: "AI"
+  streaming: "Streaming"
+  social: "Social"
+  tools: "Tools"
+
+general:
+  ipv6_enabled: false
+  dns_server: "system"
+  allow_wifi_access: false
+  wifi_access_http_port: 7222
+  wifi_access_socks5_port: 7221
+  url_test_interval: 300
+  url_test_tolerance: 50
