@@ -14,7 +14,8 @@ subscription:
 
 private:
   personal_direct_domain: "<PERSONAL_DIRECT_DOMAIN>"
-  wg_node_name: "wg-main"
+  # Comma-separated WireGuard node names, or a YAML list.
+  wg_node_names: "wg-main"
   wg_private_cidr: "<WG_PRIVATE_CIDR>"
 
 policy:
