@@ -1,0 +1,33 @@
+# Name: GeoRouting_Oceania_GeoIP_No_Resolve
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Oceania_GeoIP_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,au,no-resolve
+GEOIP,nz,no-resolve
+GEOIP,pw,no-resolve
+GEOIP,ck,no-resolve
+GEOIP,tl,no-resolve
+GEOIP,mh,no-resolve
+GEOIP,fm,no-resolve
+GEOIP,pg,no-resolve
+GEOIP,sb,no-resolve
+GEOIP,tv,no-resolve
+GEOIP,nr,no-resolve
+GEOIP,vu,no-resolve
+GEOIP,nc,no-resolve
+GEOIP,nf,no-resolve
+GEOIP,fj,no-resolve
+GEOIP,pf,no-resolve
+GEOIP,pn,no-resolve
+GEOIP,ki,no-resolve
+GEOIP,tk,no-resolve
+GEOIP,to,no-resolve
+GEOIP,wf,no-resolve
+GEOIP,ws,no-resolve
+GEOIP,nu,no-resolve
+GEOIP,mp,no-resolve
+GEOIP,gu,no-resolve
+GEOIP,um,no-resolve
+GEOIP,as,no-resolve
+GEOIP,cc,no-resolve

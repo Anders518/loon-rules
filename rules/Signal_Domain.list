@@ -1,6 +1,0 @@
-# Name: Signal_Domain
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Signal/Signal_Domain.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-DOMAIN-SUFFIX,signal.org
-DOMAIN-SUFFIX,whispersystems.org

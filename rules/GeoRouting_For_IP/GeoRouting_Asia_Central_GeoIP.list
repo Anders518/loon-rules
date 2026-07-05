@@ -1,0 +1,10 @@
+# Name: GeoRouting_Asia_Central_GeoIP
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Asia_Central_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,kz
+GEOIP,tm
+GEOIP,tj
+GEOIP,uz
+GEOIP,kg

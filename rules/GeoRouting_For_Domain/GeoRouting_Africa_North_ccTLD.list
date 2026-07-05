@@ -1,0 +1,11 @@
+# Name: GeoRouting_Africa_North_ccTLD
+# Category: GeoRouting_For_Domain
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_Africa_North_ccTLD.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,eg
+DOMAIN-SUFFIX,eh
+DOMAIN-SUFFIX,tn
+DOMAIN-SUFFIX,ma
+DOMAIN-SUFFIX,dz
+DOMAIN-SUFFIX,sd

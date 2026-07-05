@@ -1,0 +1,42 @@
+# Name: GeoRouting_America_North_ccTLD
+# Category: GeoRouting_For_Domain
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_America_North_ccTLD.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,us
+DOMAIN-SUFFIX,ca
+DOMAIN-SUFFIX,mil
+DOMAIN-SUFFIX,gov
+DOMAIN-SUFFIX,edu
+DOMAIN-SUFFIX,pm
+DOMAIN-SUFFIX,gl
+DOMAIN-SUFFIX,jm
+DOMAIN-SUFFIX,do
+DOMAIN-SUFFIX,cu
+DOMAIN-SUFFIX,mq
+DOMAIN-SUFFIX,bs
+DOMAIN-SUFFIX,bm
+DOMAIN-SUFFIX,tt
+DOMAIN-SUFFIX,kn
+DOMAIN-SUFFIX,dm
+DOMAIN-SUFFIX,lc
+DOMAIN-SUFFIX,tc
+DOMAIN-SUFFIX,aw
+DOMAIN-SUFFIX,vg
+DOMAIN-SUFFIX,gp
+DOMAIN-SUFFIX,gd
+DOMAIN-SUFFIX,ky
+DOMAIN-SUFFIX,sv
+DOMAIN-SUFFIX,gt
+DOMAIN-SUFFIX,hn
+DOMAIN-SUFFIX,ni
+DOMAIN-SUFFIX,cr
+DOMAIN-SUFFIX,pa
+DOMAIN-SUFFIX,ht
+DOMAIN-SUFFIX,mx
+DOMAIN-SUFFIX,pr
+DOMAIN-SUFFIX,vi
+DOMAIN-SUFFIX,sx
+DOMAIN-SUFFIX,cw
+DOMAIN-SUFFIX,bq
+DOMAIN-SUFFIX,bb

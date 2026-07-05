@@ -1,0 +1,38 @@
+# Name: GeoRouting_Europe_West_GeoIP_No_Resolve
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Europe_West_GeoIP_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,gb,no-resolve
+GEOIP,de,no-resolve
+GEOIP,fr,no-resolve
+GEOIP,nl,no-resolve
+GEOIP,it,no-resolve
+GEOIP,es,no-resolve
+GEOIP,pt,no-resolve
+GEOIP,ie,no-resolve
+GEOIP,dk,no-resolve
+GEOIP,se,no-resolve
+GEOIP,no,no-resolve
+GEOIP,fi,no-resolve
+GEOIP,is,no-resolve
+GEOIP,ch,no-resolve
+GEOIP,at,no-resolve
+GEOIP,be,no-resolve
+GEOIP,lu,no-resolve
+GEOIP,cy,no-resolve
+GEOIP,gr,no-resolve
+GEOIP,sh,no-resolve
+GEOIP,sj,no-resolve
+GEOIP,ax,no-resolve
+GEOIP,gi,no-resolve
+GEOIP,mt,no-resolve
+GEOIP,fo,no-resolve
+GEOIP,mc,no-resolve
+GEOIP,ad,no-resolve
+GEOIP,li,no-resolve
+GEOIP,je,no-resolve
+GEOIP,im,no-resolve
+GEOIP,gg,no-resolve
+GEOIP,va,no-resolve
+GEOIP,sm,no-resolve

@@ -1,0 +1,10 @@
+# Name: GeoRouting_Asia_Central_GeoIP_No_Resolve
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Asia_Central_GeoIP_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,kz,no-resolve
+GEOIP,tm,no-resolve
+GEOIP,tj,no-resolve
+GEOIP,uz,no-resolve
+GEOIP,kg,no-resolve

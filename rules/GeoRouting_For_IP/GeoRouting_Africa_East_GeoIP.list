@@ -1,0 +1,24 @@
+# Name: GeoRouting_Africa_East_GeoIP
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Africa_East_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,ke
+GEOIP,et
+GEOIP,er
+GEOIP,rw
+GEOIP,so
+GEOIP,ug
+GEOIP,bi
+GEOIP,tz
+GEOIP,zw
+GEOIP,ss
+GEOIP,dj
+GEOIP,sc
+GEOIP,mg
+GEOIP,zm
+GEOIP,mw
+GEOIP,mu
+GEOIP,mz
+GEOIP,km
+GEOIP,yt

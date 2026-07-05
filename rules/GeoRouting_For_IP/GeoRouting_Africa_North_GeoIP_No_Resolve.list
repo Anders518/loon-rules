@@ -1,0 +1,12 @@
+# Name: GeoRouting_Africa_North_GeoIP_No_Resolve
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Africa_North_GeoIP_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,eg,no-resolve
+GEOIP,ly,no-resolve
+GEOIP,eh,no-resolve
+GEOIP,tn,no-resolve
+GEOIP,ma,no-resolve
+GEOIP,dz,no-resolve
+GEOIP,sd,no-resolve

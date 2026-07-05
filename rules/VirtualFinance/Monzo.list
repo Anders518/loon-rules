@@ -1,0 +1,9 @@
+# Name: Monzo
+# Category: VirtualFinance
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Monzo.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,monzo.com
+DOMAIN-SUFFIX,monzo.statuspage.io
+DOMAIN-SUFFIX,ws-eu.pusher.com
+DOMAIN-KEYWORD,monzo

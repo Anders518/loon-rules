@@ -1,0 +1,19 @@
+# Name: GeoRouting_America_South_GeoIP_No_Resolve
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_America_South_GeoIP_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,br,no-resolve
+GEOIP,ar,no-resolve
+GEOIP,cl,no-resolve
+GEOIP,gy,no-resolve
+GEOIP,gf,no-resolve
+GEOIP,sr,no-resolve
+GEOIP,py,no-resolve
+GEOIP,uy,no-resolve
+GEOIP,fk,no-resolve
+GEOIP,ve,no-resolve
+GEOIP,ec,no-resolve
+GEOIP,co,no-resolve
+GEOIP,bo,no-resolve
+GEOIP,pe,no-resolve

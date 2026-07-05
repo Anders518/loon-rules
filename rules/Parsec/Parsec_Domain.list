@@ -1,0 +1,6 @@
+# Name: Parsec_Domain
+# Category: Parsec
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Parsec/Parsec_Domain.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,parsec.app

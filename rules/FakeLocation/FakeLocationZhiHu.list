@@ -1,0 +1,14 @@
+# Name: FakeLocationZhiHu
+# Category: FakeLocation
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/FakeLocation/FakeLocationZhiHu.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-KEYWORD,httpdns,REJECT-DROP
+DOMAIN-KEYWORD,httpsdns,REJECT-DROP
+DOMAIN-KEYWORD,app-analytics-services,REJECT-DROP
+DOMAIN-SUFFIX,zhihu.com
+IP-CIDR,43.152.182.14/32
+IP-CIDR,43.152.129.54/32
+IP-CIDR,43.152.134.28/32
+IP-CIDR,120.92.107.7/32
+IP-CIDR,103.41.167.0/24

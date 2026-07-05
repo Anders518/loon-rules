@@ -1,0 +1,10 @@
+# Name: GeoRouting_Asia_Central_ccTLD
+# Category: GeoRouting_For_Domain
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_Asia_Central_ccTLD.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,kz
+DOMAIN-SUFFIX,tm
+DOMAIN-SUFFIX,tj
+DOMAIN-SUFFIX,uz
+DOMAIN-SUFFIX,kg

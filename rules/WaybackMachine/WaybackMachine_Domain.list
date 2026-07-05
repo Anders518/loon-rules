@@ -1,0 +1,6 @@
+# Name: WaybackMachine_Domain
+# Category: WaybackMachine
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/WaybackMachine/WaybackMachine_Domain.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,archive.org

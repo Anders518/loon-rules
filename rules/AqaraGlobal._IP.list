@@ -1,7 +1,0 @@
-# Name: AqaraGlobal._IP
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Aqara/AqaraGlobal._IP.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-IP-CIDR,3.23.78.166/32,no-resolve
-IP-CIDR,54.214.103.243/32,no-resolve
-IP-CIDR,54.71.80.151/32,no-resolve

@@ -1,7 +1,0 @@
-# Name: FakeLocationXiaoHongShu
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/FakeLocation/FakeLocationXiaoHongShu.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-DOMAIN-SUFFIX,tracker.xiaohongshu.com,REJECT-DROP
-DOMAIN-SUFFIX,edith.xiaohongshu.com
-DOMAIN-SUFFIX,www.xiaohongshu.com

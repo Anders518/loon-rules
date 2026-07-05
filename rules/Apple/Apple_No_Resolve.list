@@ -1,0 +1,28 @@
+# Name: Apple_No_Resolve
+# Category: Apple
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Apple/Apple_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-KEYWORD,cdn-apple.com
+DOMAIN-KEYWORD,apple.com
+DOMAIN-KEYWORD,icloud.com
+DOMAIN-KEYWORD,itunes.com
+DOMAIN-KEYWORD,apple
+DOMAIN-KEYWORD,icloud-content.com
+DOMAIN-KEYWORD,apple-dns.net
+DOMAIN-KEYWORD,mzstatic.com
+DOMAIN-KEYWORD,apple-cloudkit.com
+DOMAIN-KEYWORD,aaplimg.com
+DOMAIN-KEYWORD,apple-mapkit.com
+DOMAIN-KEYWORD,digicert.com
+DOMAIN-KEYWORD,entrust.net
+DOMAIN-KEYWORD,sectigo.com
+DOMAIN-KEYWORD,me.com
+DOMAIN-KEYWORD,mac.com
+DOMAIN-KEYWORD,apple-livephotoskit.com
+DOMAIN-KEYWORD,edgesuite.net
+DOMAIN-KEYWORD,apple.co
+DOMAIN,apple-relay.fastly-edge.com
+DOMAIN,apple-relay.cloudflare.com
+DOMAIN,cp4.cloudflare.com
+IP-CIDR,17.0.0.0/8,no-resolve

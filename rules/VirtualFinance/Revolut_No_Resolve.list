@@ -1,0 +1,8 @@
+# Name: Revolut_No_Resolve
+# Category: VirtualFinance
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Revolut_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,revolut.com
+DOMAIN-SUFFIX,aqueduct.revolutlabs.com
+DOMAIN-KEYWORD,revolut

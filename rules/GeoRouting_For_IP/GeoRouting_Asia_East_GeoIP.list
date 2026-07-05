@@ -1,0 +1,12 @@
+# Name: GeoRouting_Asia_East_GeoIP
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Asia_East_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,hk
+GEOIP,jp
+GEOIP,tw
+GEOIP,kr
+GEOIP,kp
+GEOIP,mn
+GEOIP,mo

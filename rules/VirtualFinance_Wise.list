@@ -1,6 +1,0 @@
-# Name: VirtualFinance_Wise
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Wise.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-DOMAIN-SUFFIX,wise.com
-DOMAIN-KEYWORD,transferwise

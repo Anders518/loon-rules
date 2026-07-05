@@ -1,0 +1,12 @@
+# Name: BankJP
+# Category: Bank
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankJP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,mufg.jp
+DOMAIN-SUFFIX,smbc.co.jp
+DOMAIN-SUFFIX,mizuhobank.co.jp
+DOMAIN-SUFFIX,resona-gr.co.jp
+DOMAIN-SUFFIX,jibunbank.co.jp
+DOMAIN-SUFFIX,japannetbank.co.jp
+DOMAIN-SUFFIX,jp-bank.japanpost.jp

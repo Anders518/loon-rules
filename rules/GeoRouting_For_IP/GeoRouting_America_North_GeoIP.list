@@ -1,0 +1,46 @@
+# Name: GeoRouting_America_North_GeoIP
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_America_North_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,us
+GEOIP,ca
+GEOIP,pm
+GEOIP,gl
+GEOIP,jm
+GEOIP,do
+GEOIP,cu
+GEOIP,mq
+GEOIP,bs
+GEOIP,bm
+GEOIP,ai
+GEOIP,tt
+GEOIP,kn
+GEOIP,dm
+GEOIP,ag
+GEOIP,lc
+GEOIP,tc
+GEOIP,aw
+GEOIP,vg
+GEOIP,vc
+GEOIP,ms
+GEOIP,mf
+GEOIP,bl
+GEOIP,gp
+GEOIP,gd
+GEOIP,ky
+GEOIP,bz
+GEOIP,sv
+GEOIP,gt
+GEOIP,hn
+GEOIP,ni
+GEOIP,cr
+GEOIP,pa
+GEOIP,ht
+GEOIP,mx
+GEOIP,pr
+GEOIP,vi
+GEOIP,sx
+GEOIP,cw
+GEOIP,bq
+GEOIP,bb

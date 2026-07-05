@@ -1,0 +1,16 @@
+# Name: GeoRouting_America_South_ccTLD_No_Resolve
+# Category: GeoRouting_For_Domain
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_America_South_ccTLD_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,br
+DOMAIN-SUFFIX,ar
+DOMAIN-SUFFIX,cl
+DOMAIN-SUFFIX,gy
+DOMAIN-SUFFIX,gf
+DOMAIN-SUFFIX,py
+DOMAIN-SUFFIX,uy
+DOMAIN-SUFFIX,fk
+DOMAIN-SUFFIX,ve
+DOMAIN-SUFFIX,bo
+DOMAIN-SUFFIX,pe

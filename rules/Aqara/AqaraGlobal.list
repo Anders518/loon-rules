@@ -1,0 +1,50 @@
+# Name: AqaraGlobal
+# Category: Aqara
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Aqara/AqaraGlobal.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,track-us.aqara.com,REJECT
+DOMAIN-SUFFIX,track-ger.aqara.com,REJECT
+DOMAIN-SUFFIX,track-sg.aqara.com,REJECT
+DOMAIN-SUFFIX,track-ru.aqara.com,REJECT
+DOMAIN-SUFFIX,track-au.aqara.com,REJECT
+DOMAIN-SUFFIX,aiot-rpc-usa.aqara.com
+DOMAIN-SUFFIX,aiot-coap-usa.aqara.com
+DOMAIN-SUFFIX,coap-usa.aqara.com
+DOMAIN-SUFFIX,rpc-usa.aqara.com
+DOMAIN-SUFFIX,open-usa.aqara.com
+DOMAIN-SUFFIX,aiot-rpc-ger.aqara.com
+DOMAIN-SUFFIX,aiot-coap-ger.aqara.com
+DOMAIN-SUFFIX,coap-ger.aqara.com
+DOMAIN-SUFFIX,rpc-ger.aqara.com
+DOMAIN-SUFFIX,open-ger.aqara.com
+DOMAIN-SUFFIX,aiot-rpc-ru.aqara.com
+DOMAIN-SUFFIX,aiot-coap-ru.aqara.com
+DOMAIN-SUFFIX,coap-ru.aqara.com
+DOMAIN-SUFFIX,rpc-ru.aqara.com
+DOMAIN-SUFFIX,open-ru.aqara.com
+DOMAIN-SUFFIX,aiot-rpc-sg.aqara.com
+DOMAIN-SUFFIX,aiot-coap-sg.aqara.com
+DOMAIN-SUFFIX,coap-sg.aqara.com
+DOMAIN-SUFFIX,rpc-sg.aqara.com
+DOMAIN-SUFFIX,open-sg.aqara.com
+DOMAIN-SUFFIX,aiot-rpc-au.aqara.com
+DOMAIN-SUFFIX,aiot-coap-au.aqara.com
+DOMAIN-SUFFIX,coap-au.aqara.com
+DOMAIN-SUFFIX,rpc-au.aqara.com
+DOMAIN-SUFFIX,open-au.aqara.com
+DOMAIN-SUFFIX,aiot-rpc-kr.aqara.com
+DOMAIN-SUFFIX,aiot-coap-kr.aqara.com
+DOMAIN-SUFFIX,coap-kr.aqara.com
+DOMAIN-SUFFIX,rpc-kr.aqara.com
+DOMAIN-SUFFIX,open-kr.aqara.com
+DOMAIN-KEYWORD,aqara-camera-usa.
+DOMAIN-KEYWORD,aqara-camera-ru.
+DOMAIN-KEYWORD,aqara-camera-kr.
+DOMAIN-KEYWORD,aqara-camera-ger.
+DOMAIN-KEYWORD,aqara-camera-au.
+DOMAIN-KEYWORD,aqara-camera-sg.
+DOMAIN-SUFFIX,cdn.aqara.com
+IP-CIDR,3.23.78.166/32
+IP-CIDR,54.214.103.243/32
+IP-CIDR,54.71.80.151/32

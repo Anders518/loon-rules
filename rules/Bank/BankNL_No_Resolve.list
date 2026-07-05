@@ -1,0 +1,15 @@
+# Name: BankNL_No_Resolve
+# Category: Bank
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankNL_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,abnamro.com
+DOMAIN-SUFFIX,rabobank.com
+DOMAIN-SUFFIX,ing.com
+DOMAIN-SUFFIX,nibc.com
+DOMAIN-SUFFIX,triodos.com
+DOMAIN-SUFFIX,vanlanschotkempen.com
+DOMAIN-SUFFIX,leaseplan.com
+DOMAIN-SUFFIX,devolksbank.nl
+DOMAIN-SUFFIX,bankofscotland.nl
+DOMAIN-SUFFIX,bngbank.nl

@@ -1,0 +1,8 @@
+# Name: FakeLocationXiaoHongShu_No_Resolve
+# Category: FakeLocation
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/FakeLocation/FakeLocationXiaoHongShu_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,tracker.xiaohongshu.com
+DOMAIN-SUFFIX,edith.xiaohongshu.com
+DOMAIN-SUFFIX,www.xiaohongshu.com

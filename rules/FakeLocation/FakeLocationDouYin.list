@@ -1,0 +1,10 @@
+# Name: FakeLocationDouYin
+# Category: FakeLocation
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/FakeLocation/FakeLocationDouYin.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,api6-core-lf.amemv.com
+DOMAIN,sso.douyin.com
+DOMAIN,www.douyin.com
+DOMAIN-SUFFIX,snssdk.com
+DOMAIN-SUFFIX,toutiaoapi.com

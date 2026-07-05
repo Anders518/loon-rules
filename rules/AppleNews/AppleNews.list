@@ -1,0 +1,16 @@
+# Name: AppleNews
+# Category: AppleNews
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/AppleNews/AppleNews.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,smoot.apple.com
+DOMAIN-SUFFIX,apple.news
+DOMAIN-SUFFIX,news-events.apple.com
+DOMAIN-SUFFIX,news-assets.apple.com
+DOMAIN-SUFFIX,news-client.apple.com
+DOMAIN-SUFFIX,news-sports.apple.com
+DOMAIN-SUFFIX,news-edge.apple.com
+DOMAIN-SUFFIX,news-sports-events.apple.com
+DOMAIN-SUFFIX,news-client-search.apple.com
+DOMAIN-SUFFIX,news-todayconfig-edge.apple.com
+DOMAIN-SUFFIX,newsletter-edge.apple.com

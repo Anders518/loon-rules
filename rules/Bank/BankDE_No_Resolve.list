@@ -1,0 +1,15 @@
+# Name: BankDE_No_Resolve
+# Category: Bank
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankDE_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,db.com
+DOMAIN-SUFFIX,commerzbank.com
+DOMAIN-SUFFIX,bayernlb.com
+DOMAIN-SUFFIX,helaba.com
+DOMAIN-SUFFIX,kfw.de
+DOMAIN-SUFFIX,dzbank.de
+DOMAIN-SUFFIX,lbbw.de
+DOMAIN-SUFFIX,nordlb.de
+DOMAIN-SUFFIX,lbb.de
+DOMAIN-SUFFIX,saarlb.de

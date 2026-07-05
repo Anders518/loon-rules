@@ -1,7 +1,0 @@
-# Name: RustDesk
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/RustDesk/RustDesk.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-DOMAIN,rs-ny.rustdesk.com
-DOMAIN,rs-sg.rustdesk.com
-DOMAIN,rs-cn.rustdesk.com

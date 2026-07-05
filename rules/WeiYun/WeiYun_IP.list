@@ -1,0 +1,16 @@
+# Name: WeiYun_IP
+# Category: WeiYun
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/WeiYun/WeiYun_IP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+IP-CIDR,9.141.65.110/32,no-resolve
+IP-CIDR,9.141.66.219/32,no-resolve
+IP-CIDR,9.141.65.29/32,no-resolve
+IP-CIDR,9.141.66.244/32,no-resolve
+IP-CIDR,9.141.121.7/32,no-resolve
+IP-CIDR,9.146.200.61/32,no-resolve
+IP-CIDR,9.146.200.81/32,no-resolve
+IP-CIDR,9.146.202.27/32,no-resolve
+IP-CIDR,9.146.202.35/32,no-resolve
+IP-CIDR,9.146.205.191/32,no-resolve
+IP-CIDR,61.181.203.248/32,no-resolve

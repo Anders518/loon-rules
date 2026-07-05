@@ -1,0 +1,26 @@
+# Name: GeoRouting_Europe_East_GeoIP
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_Europe_East_GeoIP.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,pl
+GEOIP,hu
+GEOIP,cz
+GEOIP,ua
+GEOIP,ru
+GEOIP,ee
+GEOIP,lv
+GEOIP,bg
+GEOIP,al
+GEOIP,by
+GEOIP,si
+GEOIP,me
+GEOIP,hr
+GEOIP,ba
+GEOIP,rs
+GEOIP,ro
+GEOIP,mk
+GEOIP,sk
+GEOIP,md
+GEOIP,xk
+GEOIP,lt

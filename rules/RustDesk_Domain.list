@@ -1,7 +1,0 @@
-# Name: RustDesk_Domain
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/RustDesk/RustDesk_Domain.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-DOMAIN-SUFFIX,rs-ny.rustdesk.com
-DOMAIN-SUFFIX,rs-sg.rustdesk.com
-DOMAIN-SUFFIX,rs-cn.rustdesk.com

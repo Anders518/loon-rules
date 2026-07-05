@@ -1,0 +1,12 @@
+# Name: WaybackMachine_No_Resolve
+# Category: WaybackMachine
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/WaybackMachine/WaybackMachine_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,archive.org
+IP-CIDR,207.241.224.0/20,no-resolve
+IP-CIDR,208.70.24.0/21,no-resolve
+IP-CIDR,149.20.65.4/24,no-resolve
+IP-CIDR,142.104.123.50/24,no-resolve
+IP-CIDR,184.105.203.169/24,no-resolve
+IP-CIDR,165.22.30.252/32,no-resolve

@@ -1,0 +1,8 @@
+# Name: GeoRouting_Antarctica_ccTLD
+# Category: GeoRouting_For_Domain
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_Domain/GeoRouting_Antarctica_ccTLD.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+DOMAIN-SUFFIX,aq
+DOMAIN-SUFFIX,tf
+DOMAIN-SUFFIX,gs

@@ -1,7 +1,0 @@
-# Name: VirtualFinance_Paypal
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Paypal.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-DOMAIN-SUFFIX,paypal.com
-DOMAIN-SUFFIX,paypalobjects.com
-DOMAIN-KEYWORD,paypal

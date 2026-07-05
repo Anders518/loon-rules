@@ -1,5 +1,0 @@
-# Name: Apple_IP
-# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Apple/Apple_IP.yaml
-# Converted for Loon. Auto-generated; do not edit manually.
-
-IP-CIDR,17.0.0.0/8,no-resolve

@@ -1,0 +1,46 @@
+# Name: GeoRouting_America_North_GeoIP_No_Resolve
+# Category: GeoRouting_For_IP
+# Source: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeoRouting_For_IP/GeoRouting_America_North_GeoIP_No_Resolve.yaml
+# Converted for Loon. Auto-generated; do not edit manually.
+
+GEOIP,us,no-resolve
+GEOIP,ca,no-resolve
+GEOIP,pm,no-resolve
+GEOIP,gl,no-resolve
+GEOIP,jm,no-resolve
+GEOIP,do,no-resolve
+GEOIP,cu,no-resolve
+GEOIP,mq,no-resolve
+GEOIP,bs,no-resolve
+GEOIP,bm,no-resolve
+GEOIP,ai,no-resolve
+GEOIP,tt,no-resolve
+GEOIP,kn,no-resolve
+GEOIP,dm,no-resolve
+GEOIP,ag,no-resolve
+GEOIP,lc,no-resolve
+GEOIP,tc,no-resolve
+GEOIP,aw,no-resolve
+GEOIP,vg,no-resolve
+GEOIP,vc,no-resolve
+GEOIP,ms,no-resolve
+GEOIP,mf,no-resolve
+GEOIP,bl,no-resolve
+GEOIP,gp,no-resolve
+GEOIP,gd,no-resolve
+GEOIP,ky,no-resolve
+GEOIP,bz,no-resolve
+GEOIP,sv,no-resolve
+GEOIP,gt,no-resolve
+GEOIP,hn,no-resolve
+GEOIP,ni,no-resolve
+GEOIP,cr,no-resolve
+GEOIP,pa,no-resolve
+GEOIP,ht,no-resolve
+GEOIP,mx,no-resolve
+GEOIP,pr,no-resolve
+GEOIP,vi,no-resolve
+GEOIP,sx,no-resolve
+GEOIP,cw,no-resolve
+GEOIP,bq,no-resolve
+GEOIP,bb,no-resolve
