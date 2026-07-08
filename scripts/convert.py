@@ -15,9 +15,11 @@ The script keeps conversion conservative and generates usage docs for Loon Remot
 from __future__ import annotations
 
 import ipaddress
+import os
 import re
 import shutil
 import sys
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -35,6 +37,7 @@ REPO_RAW_ROOT = "https://raw.githubusercontent.com/Anders518/loon-rules/main"
 OUT_DIR = Path("rules")
 BUILD_DIR = Path("build")
 DEFAULT_POLICY = "AI"
+REQUEST_RETRIES = 3
 
 SUPPORTED_CLASSICAL = {
     "DOMAIN",
@@ -76,11 +79,33 @@ class ConvertResult:
         return f"{self.raw_url}, policy={DEFAULT_POLICY}, tag={self.loon_tag}, enabled=true"
 
 
+def github_headers(*, api: bool = False) -> dict[str, str]:
+    headers = {"User-Agent": "Anders518-loon-rules-sync"}
+    if api:
+        headers["Accept"] = "application/vnd.github+json"
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
+
+
+def get_with_retries(url: str, *, api: bool = False) -> requests.Response:
+    last_exc: Exception | None = None
+    for attempt in range(1, REQUEST_RETRIES + 1):
+        try:
+            response = requests.get(url, headers=github_headers(api=api), timeout=30)
+            response.raise_for_status()
+            return response
+        except Exception as exc:  # noqa: BLE001
+            last_exc = exc
+            if attempt < REQUEST_RETRIES:
+                time.sleep(2 * attempt)
+    assert last_exc is not None
+    raise last_exc
+
+
 def request_json(url: str) -> Any:
-    headers = {"Accept": "application/vnd.github+json"}
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
-    return response.json()
+    return get_with_retries(url, api=True).json()
 
 
 def discover_yaml_files(path: str = "") -> list[str]:
@@ -102,8 +127,7 @@ def discover_yaml_files(path: str = "") -> list[str]:
 
 
 def load_payload(source_url: str) -> list[Any]:
-    response = requests.get(source_url, timeout=30)
-    response.raise_for_status()
+    response = get_with_retries(source_url)
     data = yaml.safe_load(response.text)
 
     if isinstance(data, dict) and isinstance(data.get("payload"), list):
@@ -310,7 +334,12 @@ def main() -> int:
         shutil.rmtree(OUT_DIR)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    source_paths = discover_yaml_files()
+    try:
+        source_paths = discover_yaml_files()
+    except Exception as exc:  # noqa: BLE001
+        print(f"Failed to discover upstream YAML files: {exc}", file=sys.stderr)
+        return 1
+
     if not source_paths:
         print("No YAML files discovered from upstream.", file=sys.stderr)
         return 1
