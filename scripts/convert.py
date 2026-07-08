@@ -8,7 +8,6 @@ rules/
   Gemini/
     README.md
     Gemini_Domain.list
-    Gemini_IP.list
 
 The script keeps conversion conservative and generates usage docs for Loon Remote Rule.
 """
@@ -273,7 +272,7 @@ def write_category_readmes(results: list[ConvertResult]) -> None:
             f.write("```\n")
 
 
-def write_summary(results: list[ConvertResult]) -> None:
+def write_summary(results: list[ConvertResult], failed: list[tuple[str, str]]) -> None:
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     summary_path = BUILD_DIR / "summary.md"
 
@@ -299,6 +298,12 @@ def write_summary(results: list[ConvertResult]) -> None:
                 f.write(f"- `{reason}`: {count}\n")
             f.write("\n")
 
+        if failed:
+            f.write("\n## Failed Upstream Files\n\n")
+            f.write("These files failed to convert during this run. Existing successful outputs are still published.\n\n")
+            for source_path, error in failed:
+                f.write(f"- `{source_path}`: `{error}`\n")
+
 
 def main() -> int:
     if OUT_DIR.exists():
@@ -322,15 +327,22 @@ def main() -> int:
             failed.append((source_path, str(exc)))
             print(f"Failed {source_path}: {exc}", file=sys.stderr)
 
+    if not results:
+        print("No rules were converted successfully.", file=sys.stderr)
+        if failed:
+            print("\nAll attempted files failed:", file=sys.stderr)
+            for source_path, error in failed:
+                print(f"- {source_path}: {error}", file=sys.stderr)
+        return 1
+
     write_rules_index(results)
     write_category_readmes(results)
-    write_summary(results)
+    write_summary(results, failed)
 
     if failed:
-        print("\nSome files failed to convert:", file=sys.stderr)
+        print("\nSome upstream files failed to convert; continuing because successful outputs exist.", file=sys.stderr)
         for source_path, error in failed:
             print(f"- {source_path}: {error}", file=sys.stderr)
-        return 1
 
     return 0
 
