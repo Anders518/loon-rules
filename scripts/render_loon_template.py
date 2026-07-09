@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render Loon templates with centralized YAML variables."""
+"""Render Loon and Mihomo templates with centralized YAML variables."""
 
 from __future__ import annotations
 
@@ -69,17 +69,30 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         aliases["PRIMARY_PROXY_LINES"] = f"{aliases['PRIMARY']} = {aliases['SUBSCRIPTION_URL_PRIMARY']},parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
     if "BACKUP_PROXY_LINES" not in aliases and "BACKUP" in aliases and "SUBSCRIPTION_URL_BACKUP" in aliases:
         aliases["BACKUP_PROXY_LINES"] = f"{aliases['BACKUP']} = {aliases['SUBSCRIPTION_URL_BACKUP']},parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
+
+    line_defaults = {
+        "MIHOMO_CHAIN_PROXY_NAME_LINES": "",
+        "MIHOMO_SENSITIVE_PROXY_NAME_LINES": "",
+        "MIHOMO_BANK_US_PROXY_NAME_LINES": "",
+        "MIHOMO_AI_PROXY_NAME_LINES": "",
+        "MIHOMO_GLOBAL_PROXY_NAME_LINES": "",
+    }
+    for key, default in line_defaults.items():
+        aliases.setdefault(key, default)
+
     return aliases
 
 
 def render(template_text: str, variables: dict[str, str]) -> str:
     missing: set[str] = set()
+
     def replace(match: re.Match[str]) -> str:
         name = match.group(1)
         if name not in variables:
             missing.add(name)
             return match.group(0)
         return variables[name]
+
     rendered = PLACEHOLDER_RE.sub(replace, template_text)
     if missing:
         raise SystemExit("Missing template variables: " + ", ".join(sorted(missing)))
@@ -87,7 +100,7 @@ def render(template_text: str, variables: dict[str, str]) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Render Loon template with YAML variables.")
+    parser = argparse.ArgumentParser(description="Render Loon or Mihomo template with YAML variables.")
     parser.add_argument("--template", required=True)
     parser.add_argument("--variables", required=True)
     parser.add_argument("--output", required=True)
