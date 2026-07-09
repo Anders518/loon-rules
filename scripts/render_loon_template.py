@@ -52,6 +52,9 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         "WG_PRIVATE_CIDR": "PRIVATE_WG_PRIVATE_CIDR",
         "URL_TEST_INTERVAL": "GENERAL_URL_TEST_INTERVAL",
         "URL_TEST_TOLERANCE": "GENERAL_URL_TEST_TOLERANCE",
+        "MIHOMO_PRIMARY_PROVIDER_NAME_LINES": "MIHOMO_PRIMARY_PROVIDER_NAMES",
+        "MIHOMO_ALL_PROVIDER_NAME_LINES": "MIHOMO_ALL_PROVIDER_NAMES",
+        "MIHOMO_BACKUP_PROVIDER_NAME_LINES": "MIHOMO_BACKUP_PROVIDER_NAMES",
     }
     for alias, source in alias_map.items():
         if source in values:
@@ -71,11 +74,17 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         aliases["BACKUP_PROXY_LINES"] = f"{aliases['BACKUP']} = {aliases['SUBSCRIPTION_URL_BACKUP']},parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
 
     line_defaults = {
+        "MIHOMO_CUSTOM_RULE_LINES": "",
         "MIHOMO_CHAIN_PROXY_NAME_LINES": "",
         "MIHOMO_SENSITIVE_PROXY_NAME_LINES": "",
         "MIHOMO_BANK_US_PROXY_NAME_LINES": "",
         "MIHOMO_AI_PROXY_NAME_LINES": "",
         "MIHOMO_GLOBAL_PROXY_NAME_LINES": "",
+        "MIHOMO_STATIC_PROXY_LINES": "  # Add Mihomo static proxies here if needed.",
+        "MIHOMO_WG_PROXY_NAMES": "",
+        "MIHOMO_PRIMARY_PROVIDER_NAME_LINES": "",
+        "MIHOMO_ALL_PROVIDER_NAME_LINES": aliases.get("MIHOMO_PRIMARY_PROVIDER_NAME_LINES", ""),
+        "MIHOMO_BACKUP_PROVIDER_NAME_LINES": "",
     }
     for key, default in line_defaults.items():
         aliases.setdefault(key, default)
