@@ -3,6 +3,8 @@
 #
 # Based on the user's working Nikki/Mihomo configuration:
 # - DNS-first, redir-host, no fake-ip, no fallback DNS.
+# - Default DNS follows blacklist proxy mode: unmatched domains resolve through 主代理.
+# - Domestic/direct domains are pulled back to domestic/system DNS by nameserver-policy.
 # - Generic provider names, not hard-coded subscription brand names.
 # - Backup subscription is included in manual regional selectors, but excluded from url-test groups.
 # - Group order follows the working config; frequently adjusted chained/custom groups are kept near the top.
@@ -37,18 +39,24 @@ dns:
   prefer-h3: false
   respect-rules: true
 
+  # Bootstrap DNS: only used to resolve DNS server / proxy provider hostnames before policy is available.
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
 
+  # Default DNS path for domains not matched by nameserver-policy.
+  # This follows the config's blacklist routing model: unmatched traffic goes to 主代理,
+  # so unmatched DNS should also resolve through 主代理 instead of domestic DNS.
   nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
+    - https://1.1.1.1/dns-query#主代理
+    - https://8.8.8.8/dns-query#主代理
 
+  # Provider subscription hostnames must remain resolvable before proxy groups are fully ready.
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
 
+  # Fallback stays disabled. DNS routing is explicit: nameserver-policy first, then nameserver.
   fallback: []
 
   nameserver-policy:
