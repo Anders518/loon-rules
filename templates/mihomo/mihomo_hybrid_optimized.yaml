@@ -1,14 +1,13 @@
 # Mihomo Hybrid Optimized Template
 # Public-safe source template. Fill private values in Anders518/loon-conf-private.
 #
-# Accademia-inspired core:
-# - DNS is the first-class control plane; routing rules are the second layer.
-# - Do not use fake-ip.
-# - Do not use fallback DNS.
-# - DNS nameserver-policy only references domain providers.
-# - Classical providers are kept for traffic rules only.
-# - Custom static proxies may use dialer-proxy: PROXY_CHAIN for a US-entry chain.
-# - Primary providers are Lk2 + wd; ssd-bk remains manual backup only.
+# Based on the user's working Nikki/Mihomo configuration:
+# - DNS-first, redir-host, no fake-ip, no fallback DNS.
+# - Generic provider names, not hard-coded subscription brand names.
+# - Backup subscription is included in manual regional selectors, but excluded from url-test groups.
+# - Group order follows the working config; frequently adjusted chained/custom groups are kept near the top.
+# - Custom static proxies may use dialer-proxy: PROXY_CHAIN.
+# - Custom rules are injected before public rule sets.
 
 mixed-port: 7890
 allow-lan: false
@@ -23,6 +22,7 @@ profile:
 find-process-mode: strict
 unified-delay: true
 tcp-concurrent: false
+client-fingerprint: chrome
 
 # ============================================================
 # DNS-first design
@@ -59,7 +59,6 @@ dns:
     '*.local':
       - system
 
-    # Only domain providers are referenced here. Do not put classical providers in DNS policy.
     rule-set:geosite-cn,china,apple,microsoft-apps,mac-app-upgrade:
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
@@ -83,10 +82,12 @@ dns:
       - https://1.1.1.1/dns-query#主代理
       - https://8.8.8.8/dns-query#主代理
 
-    # Accademia domain providers.
     rule-set:gemini,grok,copilot,apple-ai:
       - https://1.1.1.1/dns-query#AI
       - https://8.8.8.8/dns-query#AI
+    rule-set:japan-sites:
+      - https://1.1.1.1/dns-query#日本策略
+      - https://8.8.8.8/dns-query#日本策略
     rule-set:bank-hk:
       - https://1.1.1.1/dns-query#BANK-HK
       - https://8.8.8.8/dns-query#BANK-HK
@@ -112,7 +113,17 @@ proxies:
 proxy-groups:
   - name: 主代理
     type: select
-    proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 德国策略, 游戏手动策略, 全球手动策略, 备用手动策略, DIRECT]
+    proxies:
+      - 香港策略
+      - 台湾策略
+      - 日本策略
+      - 韩国策略
+      - 新国策略
+      - 美国策略
+      - 德国策略
+      - 游戏手动策略
+      - 全球手动策略
+      - DIRECT
 
   - name: WG_PRIVATE
     type: select
@@ -123,14 +134,16 @@ proxy-groups:
   - name: PROXY_CHAIN
     type: select
     proxies:
-      - 美国节点
-      - 美国时延优选
-      - 备用美国节点
+      - 主代理
+      - 香港策略
+      - 台湾策略
+      - 日本策略
+      - 韩国策略
+      - 新国策略
+      - 美国策略
+      - 德国策略
+      - 全球手动策略
       - DIRECT
-
-  - name: PERSONAL_DIRECT
-    type: select
-    proxies: [DIRECT]
 
   - name: SENSITIVE_FIXED
     type: select
@@ -140,15 +153,22 @@ proxy-groups:
       - 新国节点
       - 香港节点
       - 德国节点
-      - 备用手动策略
       - DIRECT
 
   - name: BANK-HK
     type: select
-    proxies: [香港节点, SENSITIVE_FIXED, DIRECT]
+    proxies:
+      - 香港节点
+      - SENSITIVE_FIXED
+      - DIRECT
+
   - name: BANK-SG
     type: select
-    proxies: [新国节点, SENSITIVE_FIXED, DIRECT]
+    proxies:
+      - 新国节点
+      - SENSITIVE_FIXED
+      - DIRECT
+
   - name: BANK-US
     type: select
     proxies:
@@ -156,13 +176,22 @@ proxy-groups:
       - 美国节点
       - SENSITIVE_FIXED
       - DIRECT
+
   - name: BANK-DE
     type: select
-    proxies: [德国节点, SENSITIVE_FIXED, DIRECT]
+    proxies:
+      - 德国节点
+      - SENSITIVE_FIXED
+      - DIRECT
 
   - name: Crypto
     type: select
-    proxies: [新国节点, 美国节点, SENSITIVE_FIXED, DIRECT]
+    proxies:
+      - 新国节点
+      - 美国节点
+      - SENSITIVE_FIXED
+      - DIRECT
+
   - name: AI
     type: select
     proxies:
@@ -173,15 +202,38 @@ proxy-groups:
       - 新国节点
       - 美国节点
       - DIRECT
+
   - name: Streaming
     type: select
-    proxies: [新国策略, 日本策略, 美国策略, 主代理, DIRECT]
+    proxies:
+      - 新国策略
+      - 日本策略
+      - 美国策略
+      - 主代理
+      - DIRECT
+
   - name: Social
     type: select
-    proxies: [主代理, 香港策略, 新国策略, 美国策略, DIRECT]
+    proxies:
+      - 主代理
+      - 香港策略
+      - 新国策略
+      - 美国策略
+      - DIRECT
+
   - name: Tools
     type: select
-    proxies: [主代理, 香港策略, 日本策略, 美国策略, DIRECT]
+    proxies:
+      - 主代理
+      - 香港策略
+      - 日本策略
+      - 美国策略
+      - DIRECT
+
+  - name: PERSONAL_DIRECT
+    type: select
+    proxies:
+      - DIRECT
 
   - name: 香港策略
     type: select
@@ -211,89 +263,63 @@ proxy-groups:
   - name: 全球手动策略
     type: select
     proxies:
-<MIHOMO_GLOBAL_PROXY_NAME_LINES>
       - 全球节点
+<MIHOMO_GLOBAL_PROXY_NAME_LINES>
       - DIRECT
-  - name: 备用手动策略
-    type: select
-    proxies: [备用美国节点, 备用新国节点, 备用香港节点, 备用德国节点, 备用全部节点, DIRECT]
 
+  # Manual regional selectors use all subscriptions, including backup.
+  # Backup nodes should be identifiable by provider-level additional-prefix or subscription naming.
   - name: 香港节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 台湾节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 日本节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 韩国节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|KOR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 新国节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 美国节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 德国节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇩🇪|德国|德國|法兰克福|法蘭克福|(\b(DE|DEU|Germany|Frankfurt)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
   - name: 游戏节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)游戏|🎮|(\b(GAME)(\d+)?\b)))(?!.*((?i)回国|校园)).*$'
   - name: 全球节点
     type: select
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
     filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
-  - name: 备用香港节点
-    type: select
-    use:
-<MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-  - name: 备用新国节点
-    type: select
-    use:
-<MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-  - name: 备用美国节点
-    type: select
-    use:
-<MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-  - name: 备用德国节点
-    type: select
-    use:
-<MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*((?i)🇩🇪|德国|德國|法兰克福|法蘭克福|(\b(DE|DEU|Germany|Frankfurt)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-  - name: 备用全部节点
-    type: select
-    use:
-<MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
-
+  # Url-test groups use primary subscriptions only. Backup is intentionally excluded.
   - name: 香港时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -301,7 +327,7 @@ proxy-groups:
   - name: 台湾时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -309,7 +335,7 @@ proxy-groups:
   - name: 日本时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -317,7 +343,7 @@ proxy-groups:
   - name: 韩国时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|KOR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -325,7 +351,7 @@ proxy-groups:
   - name: 新国时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -333,7 +359,7 @@ proxy-groups:
   - name: 美国时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -341,7 +367,7 @@ proxy-groups:
   - name: 德国时延优选
     type: url-test
     use:
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
     filter: '^(?=.*((?i)🇩🇪|德国|德國|法兰克福|法蘭克福|(\b(DE|DEU|Germany|Frankfurt)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
     url: http://www.gstatic.com/generate_204
     interval: 300
@@ -396,6 +422,13 @@ rule-providers:
     format: yaml
     path: ./ruleset/Accademia/AppleAI_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/AppleAI/AppleAI_Domain.yaml
+    interval: 21600
+  japan-sites:
+    type: http
+    behavior: domain
+    format: yaml
+    path: ./ruleset/Anders518/JapanSites.yaml
+    url: https://raw.githubusercontent.com/Anders518/loon-rules/main/templates/mihomo/rules/JapanSites.yaml
     interval: 21600
   openai:
     type: http
@@ -511,15 +544,28 @@ rule-providers:
     interval: 21600
 
 rules:
+  # Custom rules from private variables. Keep personal/private domains out of public repo.
+<MIHOMO_CUSTOM_RULE_LINES>
+
+  # Remote resource domains.
   - DOMAIN,raw.githubusercontent.com,主代理
   - DOMAIN-SUFFIX,githubusercontent.com,主代理
   - DOMAIN-SUFFIX,github.com,主代理
   - DOMAIN-SUFFIX,github.io,主代理
   - DOMAIN-SUFFIX,jsdelivr.net,主代理
+
+  # Personal direct and private network.
   - DOMAIN,<PERSONAL_DIRECT_DOMAIN>,PERSONAL_DIRECT
   - DOMAIN-SUFFIX,<PERSONAL_DIRECT_DOMAIN>,PERSONAL_DIRECT
   - IP-CIDR,<WG_PRIVATE_CIDR>,WG_PRIVATE,no-resolve
+
+  # Reject/hijacking first.
   - RULE-SET,hijacking-plus,REJECT
+
+  # Japan-only services before broad AI / direct rules.
+  - RULE-SET,japan-sites,日本策略
+
+  # Sensitive overseas categories.
   - RULE-SET,gemini,AI
   - RULE-SET,grok,AI
   - RULE-SET,copilot,AI
@@ -537,10 +583,14 @@ rules:
   - RULE-SET,bank-sg,BANK-SG
   - RULE-SET,bank-us,BANK-US
   - RULE-SET,bank-de,BANK-DE
+
+  # Domestic/system direct layer.
   - RULE-SET,apple,DIRECT
   - RULE-SET,microsoft-apps,DIRECT
   - RULE-SET,mac-app-upgrade,DIRECT
   - RULE-SET,geosite-cn,DIRECT
   - RULE-SET,china,DIRECT
   - GEOIP,CN,DIRECT
+
+  # Blacklist-style final proxy.
   - MATCH,主代理
