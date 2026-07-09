@@ -7,6 +7,7 @@
 # - Do not use fallback DNS.
 # - DNS nameserver-policy only references domain providers.
 # - Classical providers are kept for traffic rules only.
+# - Custom static proxies may use dialer-proxy: PROXY_CHAIN for a US-entry chain.
 # - Primary providers are Lk2 + wd; ssd-bk remains manual backup only.
 
 mixed-port: 7890
@@ -119,33 +120,59 @@ proxy-groups:
       - DIRECT
 <MIHOMO_WG_PROXY_NAMES>
 
+  - name: PROXY_CHAIN
+    type: select
+    proxies:
+      - 美国节点
+      - 美国时延优选
+      - 备用美国节点
+      - DIRECT
+
   - name: PERSONAL_DIRECT
     type: select
     proxies: [DIRECT]
 
   - name: SENSITIVE_FIXED
     type: select
-    proxies: [美国节点, 新国节点, 香港节点, 德国节点, 备用手动策略, DIRECT]
+    proxies:
+<MIHOMO_SENSITIVE_PROXY_NAME_LINES>
+      - 美国节点
+      - 新国节点
+      - 香港节点
+      - 德国节点
+      - 备用手动策略
+      - DIRECT
 
   - name: BANK-HK
     type: select
-    proxies: [香港节点, 备用香港节点, 备用手动策略, DIRECT]
+    proxies: [香港节点, SENSITIVE_FIXED, DIRECT]
   - name: BANK-SG
     type: select
-    proxies: [新国节点, 备用新国节点, 备用手动策略, DIRECT]
+    proxies: [新国节点, SENSITIVE_FIXED, DIRECT]
   - name: BANK-US
     type: select
-    proxies: [美国节点, 备用美国节点, 备用手动策略, DIRECT]
+    proxies:
+<MIHOMO_BANK_US_PROXY_NAME_LINES>
+      - 美国节点
+      - SENSITIVE_FIXED
+      - DIRECT
   - name: BANK-DE
     type: select
-    proxies: [德国节点, 备用德国节点, 备用手动策略, DIRECT]
+    proxies: [德国节点, SENSITIVE_FIXED, DIRECT]
 
   - name: Crypto
     type: select
-    proxies: [新国节点, 美国节点, 备用新国节点, 备用美国节点, 备用手动策略, DIRECT]
+    proxies: [新国节点, 美国节点, SENSITIVE_FIXED, DIRECT]
   - name: AI
     type: select
-    proxies: [新国策略, 美国策略, 新国节点, 美国节点, 备用手动策略, DIRECT]
+    proxies:
+<MIHOMO_AI_PROXY_NAME_LINES>
+      - SENSITIVE_FIXED
+      - 新国策略
+      - 美国策略
+      - 新国节点
+      - 美国节点
+      - DIRECT
   - name: Streaming
     type: select
     proxies: [新国策略, 日本策略, 美国策略, 主代理, DIRECT]
@@ -158,32 +185,35 @@ proxy-groups:
 
   - name: 香港策略
     type: select
-    proxies: [香港时延优选, 香港节点, DIRECT]
+    proxies: [香港时延优选, 香港节点]
   - name: 台湾策略
     type: select
-    proxies: [台湾时延优选, 台湾节点, DIRECT]
+    proxies: [台湾时延优选, 台湾节点]
   - name: 日本策略
     type: select
-    proxies: [日本时延优选, 日本节点, DIRECT]
+    proxies: [日本时延优选, 日本节点]
   - name: 韩国策略
     type: select
-    proxies: [韩国时延优选, 韩国节点, DIRECT]
+    proxies: [韩国时延优选, 韩国节点]
   - name: 新国策略
     type: select
-    proxies: [新国时延优选, 新国节点, DIRECT]
+    proxies: [新国时延优选, 新国节点]
   - name: 美国策略
     type: select
-    proxies: [美国时延优选, 美国节点, DIRECT]
+    proxies: [美国时延优选, 美国节点]
   - name: 德国策略
     type: select
-    proxies: [德国时延优选, 德国节点, DIRECT]
+    proxies: [德国时延优选, 德国节点]
 
   - name: 游戏手动策略
     type: select
-    proxies: [游戏节点, 主代理, DIRECT]
+    proxies: [游戏节点, DIRECT]
   - name: 全球手动策略
     type: select
-    proxies: [全球节点, 主代理, DIRECT]
+    proxies:
+<MIHOMO_GLOBAL_PROXY_NAME_LINES>
+      - 全球节点
+      - DIRECT
   - name: 备用手动策略
     type: select
     proxies: [备用美国节点, 备用新国节点, 备用香港节点, 备用德国节点, 备用全部节点, DIRECT]
