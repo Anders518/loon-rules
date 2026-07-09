@@ -51,10 +51,30 @@ mihomo:
     - "      - primary-b"
   backup_provider_names:
     - "      - backup"
+
+  # Static custom proxy definitions. For a chained custom node, set `dialer-proxy: PROXY_CHAIN`.
   static_proxy_lines:
     - "  # Add Mihomo static proxies here if needed."
+    - "  # - name: custom-us-chain"
+    - "  #   type: vless"
+    - "  #   server: example.invalid"
+    - "  #   port: 443"
+    - "  #   udp: true"
+    - "  #   client-fingerprint: chrome"
+    - "  #   dialer-proxy: PROXY_CHAIN"
+
   wg_proxy_names:
     - "      # - wg-main"
+
+  # Optional custom chained proxy names injected into policy groups.
+  sensitive_proxy_name_lines:
+    - "      # - custom-us-chain"
+  bank_us_proxy_name_lines:
+    - "      # - custom-us-chain"
+  ai_proxy_name_lines:
+    - "      # - custom-us-chain"
+  global_proxy_name_lines:
+    - "      # - custom-us-chain"
 
 policy:
   main: "主代理"
