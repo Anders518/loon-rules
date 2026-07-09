@@ -5,9 +5,8 @@
 # - DNS is the first-class control plane; routing rules are the second layer.
 # - Do not use fake-ip.
 # - Do not use fallback DNS.
-# - CN/personal/local domains resolve through domestic/system DNS.
-# - Overseas, AI, crypto, banking, and remote resources resolve through policy-bound DoH.
-# - Domain rules are preferred before IP / GEOIP fallback.
+# - DNS nameserver-policy only references domain providers.
+# - Classical providers are kept for traffic rules only.
 # - Primary providers are Lk2 + wd; ssd-bk remains manual backup only.
 
 mixed-port: 7890
@@ -23,14 +22,10 @@ profile:
 find-process-mode: strict
 unified-delay: true
 tcp-concurrent: false
-global-client-fingerprint: chrome
 
 # ============================================================
 # DNS-first design
 # ============================================================
-# Accademia's practical point is that DNS correctness is more important than piling up rules.
-# This template therefore keeps redir-host, disables fallback, and pushes non-CN sensitive
-# resolution through policy-bound DoH servers where Mihomo supports the #policy suffix.
 dns:
   enable: true
   listen: 0.0.0.0:1053
@@ -45,23 +40,17 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
 
-  # Base nameserver is domestic and deterministic. Overseas domains are redirected below
-  # by nameserver-policy instead of by fallback.
   nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
 
-  # Proxy provider hostnames should be resolvable before proxy groups are ready.
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
 
-  # No fallback DNS. This avoids the classic leak path where an overseas fallback resolver
-  # answers domains that should have been resolved through a proxy-side resolver.
   fallback: []
 
   nameserver-policy:
-    # Personal/local/direct domains: never resolve through proxy-side DNS.
     +.<PERSONAL_DIRECT_DOMAIN>:
       - system
     localhost:
@@ -69,7 +58,7 @@ dns:
     '*.local':
       - system
 
-    # Domestic/direct domains: resolve domestically first.
+    # Only domain providers are referenced here. Do not put classical providers in DNS policy.
     rule-set:geosite-cn,china,apple,microsoft-apps,mac-app-upgrade:
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
@@ -77,7 +66,6 @@ dns:
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
 
-    # Remote resources are fetched through 主代理, so DNS follows 主代理 too.
     raw.githubusercontent.com:
       - https://1.1.1.1/dns-query#主代理
       - https://8.8.8.8/dns-query#主代理
@@ -94,17 +82,10 @@ dns:
       - https://1.1.1.1/dns-query#主代理
       - https://8.8.8.8/dns-query#主代理
 
-    # AI: resolve through AI policy, not through direct DNS.
-    rule-set:gemini,grok,copilot,openai,claude,apple-ai:
+    # Accademia domain providers.
+    rule-set:gemini,grok,copilot,apple-ai:
       - https://1.1.1.1/dns-query#AI
       - https://8.8.8.8/dns-query#AI
-
-    # Crypto and exchanges: resolve through fixed crypto policy.
-    rule-set:crypto,binance,okx:
-      - https://1.1.1.1/dns-query#Crypto
-      - https://8.8.8.8/dns-query#Crypto
-
-    # Regional banking: resolve through the same regional bank policy used for traffic.
     rule-set:bank-hk:
       - https://1.1.1.1/dns-query#BANK-HK
       - https://8.8.8.8/dns-query#BANK-HK
@@ -130,18 +111,7 @@ proxies:
 proxy-groups:
   - name: 主代理
     type: select
-    proxies:
-      - 香港策略
-      - 台湾策略
-      - 日本策略
-      - 韩国策略
-      - 新国策略
-      - 美国策略
-      - 德国策略
-      - 游戏手动策略
-      - 全球手动策略
-      - 备用手动策略
-      - DIRECT
+    proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 德国策略, 游戏手动策略, 全球手动策略, 备用手动策略, DIRECT]
 
   - name: WG_PRIVATE
     type: select
@@ -151,97 +121,40 @@ proxy-groups:
 
   - name: PERSONAL_DIRECT
     type: select
-    proxies:
-      - DIRECT
+    proxies: [DIRECT]
 
   - name: SENSITIVE_FIXED
     type: select
-    proxies:
-      - 美国节点
-      - 新国节点
-      - 香港节点
-      - 德国节点
-      - 备用手动策略
-      - DIRECT
+    proxies: [美国节点, 新国节点, 香港节点, 德国节点, 备用手动策略, DIRECT]
 
   - name: BANK-HK
     type: select
-    proxies:
-      - 香港节点
-      - 备用香港节点
-      - 备用手动策略
-      - DIRECT
-
+    proxies: [香港节点, 备用香港节点, 备用手动策略, DIRECT]
   - name: BANK-SG
     type: select
-    proxies:
-      - 新国节点
-      - 备用新国节点
-      - 备用手动策略
-      - DIRECT
-
+    proxies: [新国节点, 备用新国节点, 备用手动策略, DIRECT]
   - name: BANK-US
     type: select
-    proxies:
-      - 美国节点
-      - 备用美国节点
-      - 备用手动策略
-      - DIRECT
-
+    proxies: [美国节点, 备用美国节点, 备用手动策略, DIRECT]
   - name: BANK-DE
     type: select
-    proxies:
-      - 德国节点
-      - 备用德国节点
-      - 备用手动策略
-      - DIRECT
+    proxies: [德国节点, 备用德国节点, 备用手动策略, DIRECT]
 
   - name: Crypto
     type: select
-    proxies:
-      - 新国节点
-      - 美国节点
-      - 备用新国节点
-      - 备用美国节点
-      - 备用手动策略
-      - DIRECT
-
+    proxies: [新国节点, 美国节点, 备用新国节点, 备用美国节点, 备用手动策略, DIRECT]
   - name: AI
     type: select
-    proxies:
-      - 新国策略
-      - 美国策略
-      - 新国节点
-      - 美国节点
-      - 备用手动策略
-      - DIRECT
-
+    proxies: [新国策略, 美国策略, 新国节点, 美国节点, 备用手动策略, DIRECT]
   - name: Streaming
     type: select
-    proxies:
-      - 新国策略
-      - 日本策略
-      - 美国策略
-      - 主代理
-      - DIRECT
-
+    proxies: [新国策略, 日本策略, 美国策略, 主代理, DIRECT]
   - name: Social
     type: select
-    proxies:
-      - 主代理
-      - 香港策略
-      - 新国策略
-      - 美国策略
-      - DIRECT
-
+    proxies: [主代理, 香港策略, 新国策略, 美国策略, DIRECT]
   - name: Tools
     type: select
-    proxies:
-      - 主代理
-      - 香港策略
-      - 日本策略
-      - 美国策略
-      - DIRECT
+    proxies: [主代理, 香港策略, 日本策略, 美国策略, DIRECT]
 
   - name: 香港策略
     type: select
@@ -275,7 +188,6 @@ proxy-groups:
     type: select
     proxies: [备用美国节点, 备用新国节点, 备用香港节点, 备用德国节点, 备用全部节点, DIRECT]
 
-  # Primary node selectors. They intentionally use primary providers only.
   - name: 香港节点
     type: select
     use:
@@ -322,7 +234,6 @@ proxy-groups:
 <MIHOMO_PRIMARY_PROVIDER_NAMES>
     filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
-  # Backup selectors. These are manual fallback only and never enter url-test.
   - name: 备用香港节点
     type: select
     use:
@@ -347,9 +258,8 @@ proxy-groups:
     type: select
     use:
 <MIHOMO_BACKUP_PROVIDER_NAMES>
-    filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
+    filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|福利|好友|失联|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
-  # Primary url-test groups only use Lk2 + wd providers.
   - name: 香港时延优选
     type: url-test
     use:
@@ -407,20 +317,17 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-# ============================================================
-# Rule providers: Domain-first, IP/GEOIP only as fallback.
-# ============================================================
 rule-providers:
   geosite-cn:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/GeositeCN_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/GeositeCN/GeositeCN_Domain.yaml
     interval: 21600
   china:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/China_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/China/China_Domain.yaml
@@ -434,28 +341,28 @@ rule-providers:
     interval: 21600
   gemini:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Gemini_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Gemini/Gemini_Domain.yaml
     interval: 21600
   grok:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Grok_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Grok/Grok_Domain.yaml
     interval: 21600
   copilot:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Copilot_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Copilot/Copilot_Domain.yaml
     interval: 21600
   apple-ai:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/AppleAI_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/AppleAI/AppleAI_Domain.yaml
@@ -497,84 +404,83 @@ rule-providers:
     interval: 21600
   paypal:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Paypal.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Paypal.yaml
     interval: 21600
   wise:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Wise.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Wise.yaml
     interval: 21600
   monzo:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Monzo.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Monzo.yaml
     interval: 21600
   revolut:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Revolut.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/VirtualFinance/Revolut.yaml
     interval: 21600
   bank-hk:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/BankHK_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankHK_Domain.yaml
     interval: 21600
   bank-sg:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/BankSG_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankSG_Domain.yaml
     interval: 21600
   bank-us:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/BankUS_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankUS_Domain.yaml
     interval: 21600
   bank-de:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/BankDE_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Bank/BankDE_Domain.yaml
     interval: 21600
   apple:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/Apple_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/Apple/Apple_Domain.yaml
     interval: 21600
   microsoft-apps:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/MicrosoftAPPs_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/MicrosoftAPPs/MicrosoftAPPs_Domain.yaml
     interval: 21600
   mac-app-upgrade:
     type: http
-    behavior: classical
+    behavior: domain
     format: yaml
     path: ./ruleset/Accademia/MacAppUpgrade_Domain.yaml
     url: https://raw.githubusercontent.com/Accademia/Additional_Rule_For_Clash/main/MacAppUpgrade/MacAppUpgrade_Domain.yaml
     interval: 21600
 
 rules:
-  # Local/direct and update infrastructure first.
   - DOMAIN,raw.githubusercontent.com,主代理
   - DOMAIN-SUFFIX,githubusercontent.com,主代理
   - DOMAIN-SUFFIX,github.com,主代理
@@ -583,11 +489,7 @@ rules:
   - DOMAIN,<PERSONAL_DIRECT_DOMAIN>,PERSONAL_DIRECT
   - DOMAIN-SUFFIX,<PERSONAL_DIRECT_DOMAIN>,PERSONAL_DIRECT
   - IP-CIDR,<WG_PRIVATE_CIDR>,WG_PRIVATE,no-resolve
-
-  # Reject/hijacking first.
   - RULE-SET,hijacking-plus,REJECT
-
-  # Sensitive overseas categories before broad direct rules.
   - RULE-SET,gemini,AI
   - RULE-SET,grok,AI
   - RULE-SET,copilot,AI
@@ -605,14 +507,10 @@ rules:
   - RULE-SET,bank-sg,BANK-SG
   - RULE-SET,bank-us,BANK-US
   - RULE-SET,bank-de,BANK-DE
-
-  # Domestic/system direct layer.
   - RULE-SET,apple,DIRECT
   - RULE-SET,microsoft-apps,DIRECT
   - RULE-SET,mac-app-upgrade,DIRECT
   - RULE-SET,geosite-cn,DIRECT
   - RULE-SET,china,DIRECT
   - GEOIP,CN,DIRECT
-
-  # Blacklist-style final proxy.
   - MATCH,主代理
