@@ -1,31 +1,28 @@
 # Mihomo Template
 
-This directory contains a public-safe Mihomo template built around the Accademia DNS-first idea.
+This directory contains a public-safe Mihomo template built around the user's working Nikki/Mihomo configuration and the Accademia DNS-first idea.
 
 ## Design goals
 
 - DNS is the first-class control plane; routing rules are the second layer.
 - Avoid fake-ip and avoid fallback DNS.
 - Use `redir-host` with deterministic DNS behavior.
-- Resolve CN, system, and personal-direct domains through domestic/system DNS.
-- Resolve GitHub/raw/CDN resource domains through `主代理` DNS.
-- Resolve AI domains through `AI` DNS.
-- Resolve Crypto / Binance / OKX through `Crypto` DNS.
-- Resolve regional bank rules through `BANK-HK`, `BANK-SG`, `BANK-US`, and `BANK-DE` DNS.
+- Use generic provider names such as `primary-a`, `primary-b`, and `backup`; do not hard-code real subscription brand names in the public template.
+- Manual regional selectors such as `香港节点`, `日本节点`, and `美国节点` use all providers, including `backup`.
+- Url-test groups such as `香港时延优选` and `美国时延优选` use only primary providers, so backup nodes are available for manual selection but are not auto-selected.
+- Backup providers should use provider-level `override.additional-prefix`, for example `[BK] `, so backup nodes are visually identifiable in Nikki.
+- Preserve the working config's group order, especially `PROXY_CHAIN`, `SENSITIVE_FIXED`, `BANK-*`, `Crypto`, and `AI` near the top.
+- Custom static proxies can use `dialer-proxy: PROXY_CHAIN`.
+- Custom rules are injected before public rule sets.
+- Japan-only sites are handled by `JapanSites.yaml` and routed to `日本策略`.
 - Use Accademia upstream Clash/Mihomo YAML rule files directly where available.
-- Use blackmatrix7 only as fallback for categories currently missing from Accademia:
-  - OpenAI
-  - Claude
-  - Crypto
-  - Binance
-  - OKX
-- Keep `Lk2` and `wd` as daily primary subscriptions.
-- Keep `ssd-bk` as manual backup only.
+- Use blackmatrix7 only as fallback for categories currently missing from Accademia: OpenAI, Claude, Crypto, Binance, and OKX.
 
 ## Files
 
 ```text
 mihomo_hybrid_optimized.yaml
+rules/JapanSites.yaml
 ```
 
 ## DNS structure
@@ -37,15 +34,15 @@ enhanced-mode: redir-host
 fallback: []
 nameserver-policy:
   rule-set:geosite-cn,china: domestic DoH
-  rule-set:gemini,grok,copilot,openai,claude: DoH#AI
-  rule-set:crypto,binance,okx: DoH#Crypto
+  rule-set:gemini,grok,copilot,apple-ai: DoH#AI
+  rule-set:japan-sites: DoH#日本策略
   rule-set:bank-hk: DoH#BANK-HK
   rule-set:bank-sg: DoH#BANK-SG
   rule-set:bank-us: DoH#BANK-US
   rule-set:bank-de: DoH#BANK-DE
 ```
 
-This is the main difference from a normal rule-heavy Mihomo file. The goal is to prevent DNS from becoming a side-channel that contradicts the later routing decision.
+Classical providers such as blackmatrix7 OpenAI, Claude, Crypto, Binance, and OKX are kept in traffic rules, not DNS policy, to avoid Nikki warnings about classical providers in DNS matching.
 
 ## Rendering
 
@@ -54,9 +51,10 @@ The public template contains placeholders such as:
 ```text
 <MIHOMO_PROXY_PROVIDER_LINES>
 <MIHOMO_STATIC_PROXY_LINES>
-<MIHOMO_PRIMARY_PROVIDER_NAMES>
-<MIHOMO_BACKUP_PROVIDER_NAMES>
+<MIHOMO_ALL_PROVIDER_NAME_LINES>
+<MIHOMO_PRIMARY_PROVIDER_NAME_LINES>
 <MIHOMO_WG_PROXY_NAMES>
+<MIHOMO_CUSTOM_RULE_LINES>
 <PERSONAL_DIRECT_DOMAIN>
 <WG_PRIVATE_CIDR>
 ```
