@@ -46,13 +46,20 @@ mihomo:
     - "    path: ./providers/backup.yaml"
     - "    interval: 3600"
     - "    health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300}"
-  primary_provider_names:
+    - "    override:"
+    - "      additional-prefix: '[BK] '"
+
+  # Manual regional selectors use all providers, including backup.
+  all_provider_name_lines:
     - "      - primary-a"
     - "      - primary-b"
-  backup_provider_names:
     - "      - backup"
 
-  # Static custom proxy definitions. For a chained custom node, set `dialer-proxy: PROXY_CHAIN`.
+  # Url-test groups use primary providers only. Backup is intentionally excluded.
+  primary_provider_name_lines:
+    - "      - primary-a"
+    - "      - primary-b"
+
   static_proxy_lines:
     - "  # Add Mihomo static proxies here if needed."
     - "  # - name: custom-us-chain"
@@ -66,7 +73,10 @@ mihomo:
   wg_proxy_names:
     - "      # - wg-main"
 
-  # Optional custom chained proxy names injected into policy groups.
+  custom_rule_lines:
+    - "  # - DOMAIN-SUFFIX,example.invalid,DIRECT"
+    - "  # - DOMAIN-SUFFIX,example-proxy.invalid,主代理"
+
   sensitive_proxy_name_lines:
     - "      # - custom-us-chain"
   bank_us_proxy_name_lines:
