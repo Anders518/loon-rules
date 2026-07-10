@@ -26,6 +26,18 @@ private:
     - "# Add full Loon WireGuard proxy lines in private storage only."
   wg_private_cidr: "<WG_PRIVATE_CIDR>"
 
+loon:
+  custom_rule_lines:
+    - "# Add private custom Loon rules here."
+    - "# DOMAIN-SUFFIX,example.invalid,DIRECT"
+    - "# DOMAIN-SUFFIX,example-proxy.invalid,主代理"
+
+  # Optional custom policy items. Include the trailing comma when the value is enabled.
+  sensitive_policy_items: ""
+  bank_us_policy_items: ""
+  ai_policy_items: ""
+  global_policy_items: ""
+
 mihomo:
   proxy_provider_lines:
     - "  primary-a:"
