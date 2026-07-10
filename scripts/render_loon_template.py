@@ -34,6 +34,16 @@ def flatten(data: dict[str, Any], prefix: str = "") -> dict[str, str]:
     return result
 
 
+def join_csv(*parts: str) -> str:
+    items: list[str] = []
+    for part in parts:
+        for item in part.split(","):
+            item = item.strip()
+            if item and item not in items:
+                items.append(item)
+    return ",".join(items)
+
+
 def add_aliases(values: dict[str, str]) -> dict[str, str]:
     aliases = dict(values)
     alias_map = {
@@ -43,6 +53,7 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         "BACKUP": "SUBSCRIPTION_BACKUP_NAME",
         "BACKUP_NAMES": "SUBSCRIPTION_BACKUP_NAMES",
         "BACKUP_PROXY_LINES": "SUBSCRIPTION_BACKUP_PROXY_LINES",
+        "ALL_NAMES": "SUBSCRIPTION_ALL_NAMES",
         "SUBSCRIPTION_URL_PRIMARY": "SUBSCRIPTION_PRIMARY_URL",
         "SUBSCRIPTION_URL_BACKUP": "SUBSCRIPTION_BACKUP_URL",
         "PERSONAL_DIRECT_DOMAIN": "PRIVATE_PERSONAL_DIRECT_DOMAIN",
@@ -64,6 +75,8 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         aliases["PRIMARY_NAMES"] = aliases["PRIMARY"]
     if "BACKUP_NAMES" not in aliases and "BACKUP" in aliases:
         aliases["BACKUP_NAMES"] = aliases["BACKUP"]
+    if "ALL_NAMES" not in aliases:
+        aliases["ALL_NAMES"] = join_csv(aliases.get("PRIMARY_NAMES", ""), aliases.get("BACKUP_NAMES", ""))
     if "WG_NODE_NAMES" not in aliases and "WG_NODE_NAME" in aliases:
         aliases["WG_NODE_NAMES"] = aliases["WG_NODE_NAME"]
     if "WG_PROXY_LINES" not in aliases:
@@ -74,6 +87,12 @@ def add_aliases(values: dict[str, str]) -> dict[str, str]:
         aliases["BACKUP_PROXY_LINES"] = f"{aliases['BACKUP']} = {aliases['SUBSCRIPTION_URL_BACKUP']},parser-enabled=true,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false"
 
     line_defaults = {
+        "LOON_CUSTOM_RULE_LINES": "# Add private custom rules in variables file.",
+        "LOON_CHAIN_POLICY_ITEMS": "",
+        "LOON_SENSITIVE_POLICY_ITEMS": "",
+        "LOON_BANK_US_POLICY_ITEMS": "",
+        "LOON_AI_POLICY_ITEMS": "",
+        "LOON_GLOBAL_POLICY_ITEMS": "",
         "MIHOMO_CUSTOM_RULE_LINES": "",
         "MIHOMO_CHAIN_PROXY_NAME_LINES": "",
         "MIHOMO_SENSITIVE_PROXY_NAME_LINES": "",
