@@ -1,6 +1,7 @@
 # Japan-only services that commonly require Japanese IP.
 # Public-safe static rule list for Loon Remote Rule.
 
+DOMAIN-SUFFIX,jp
 DOMAIN-SUFFIX,dlsite.com
 DOMAIN-SUFFIX,dmm.com
 DOMAIN-SUFFIX,dmm.co.jp
