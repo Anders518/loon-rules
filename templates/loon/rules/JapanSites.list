@@ -1,6 +1,8 @@
 # Japan-region services that commonly require Japanese IP.
 # Public-safe static rule list for Loon Remote Rule.
-# Do not add broad rules such as DOMAIN-SUFFIX,jp here.
+
+# Broad Japanese TLD override, intentionally kept first.
+DOMAIN-SUFFIX,jp
 
 # DMM / KanColle / region-locked games
 DOMAIN-SUFFIX,dmm.com
