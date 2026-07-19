@@ -1,4 +1,7 @@
 payload:
+  # Broad Japanese TLD override, intentionally kept first.
+  - '+.jp'
+
   # DMM / KanColle / region-locked games
   - '+.dmm.com'
   - '+.dmm.co.jp'
