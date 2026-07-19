@@ -1,17 +1,51 @@
 payload:
-  - '+.jp'
-  - '+.dlsite.com'
+  # DMM / KanColle / region-locked games
   - '+.dmm.com'
   - '+.dmm.co.jp'
   - '+.dmmgames.com'
   - '+.dmmgames.co.jp'
+  - '+.kancolle-server.com'
+
+  # DLsite / FANZA / doujin content
+  - '+.dlsite.com'
+  - '+.dlsite.jp'
   - '+.fanza.com'
   - '+.fanza.co.jp'
+
+  # Doujin / hobby / anime goods shops
   - '+.booth.pm'
   - '+.melonbooks.co.jp'
-  - '+.animate-onlineshop.jp'
-  - '+.bookwalker.jp'
   - '+.toranoana.jp'
+  - '+.animate-onlineshop.jp'
+  - '+.amiami.com'
+  - '+.suruga-ya.jp'
+  - '+.ebten.jp'
+  - '+.sofmap.com'
+  - '+.yodobashi.com'
+
+  # Japan shopping / second-hand / fashion
   - '+.rakuten.co.jp'
+  - '+.rakuten.com'
+  - '+.mercari.com'
+  - '+.mercari.jp'
+  - '+.paypayfleamarket.yahoo.co.jp'
+  - '+.shopping.yahoo.co.jp'
+  - '+.auctions.yahoo.co.jp'
   - '+.zozo.jp'
   - '+.zozo.com'
+
+  # E-books / magazines / digital stores
+  - '+.bookwalker.jp'
+  - '+.booklive.jp'
+  - '+.cmoa.jp'
+  - '+.honto.jp'
+
+  # Japan streaming / tickets / events with frequent region checks
+  - '+.abema.tv'
+  - '+.hulu.jp'
+  - '+.happyon.jp'
+  - '+.hjholdings.jp'
+  - '+.pia.jp'
+  - '+.eplus.jp'
+  - '+.l-tike.com'
+  - '+.zaiko.io'
