@@ -1,5 +1,7 @@
 payload:
   # Broad Japanese TLD override, intentionally kept first.
+  # Many small JP sites perform Japan-region checks; routing all .jp domains to 日本策略 is intentional.
+  # Example covered by this line: ms-online.co.jp.
   - '+.jp'
 
   # DMM / KanColle / region-locked games
